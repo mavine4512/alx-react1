@@ -2,6 +2,6 @@ const $ = require("jquery");
 import "./header.css";
 
 $("body").append("<div id='logo'></div>");
-$("body").append("<p>Holberton Dashboard</p>");
+$("body").append("<h1>Holberton Dashboard</h1>");
 
 console.log("Init Header");
