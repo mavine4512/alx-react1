@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   devtool: "inline-source-map",
   entry: {
     header: "./modules/header/header.js",
@@ -27,7 +27,7 @@ module.exports = {
     port: 8564,
   },
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "public"),
   },
   module: {
@@ -44,7 +44,7 @@ module.exports = {
             loader: "image-webpack-loader",
             options: {
               bypassOnDebug: true,
-              disabled: true,
+              disable: true,
             },
           },
         ],
