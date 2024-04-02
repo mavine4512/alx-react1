@@ -8,6 +8,14 @@
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
   },
+  "keywords": [
+    "asset compilation",
+    "entry point",
+    "javascript",
+    "loader",
+    "output",
+    "webpack plugin"
+  ],
   "author": "Mavine Naaman",
   "license": "ISC",
   "devDependencies": {
