@@ -1,0 +1,11 @@
+.notifications-box{
+    border-bottom: 4px dotted rgb(243, 108, );
+}
+
+ul li[data-priority="default"] {
+    color: rgb(134, 134, 251);
+}
+
+ul li[data-priority="urgent"] {
+    color: rgb(245, 113, 113);
+}

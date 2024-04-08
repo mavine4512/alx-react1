@@ -1,0 +1,12 @@
+.div-footer{
+    border-top: 4px solid rgb(218, 62, 62);
+    margin-top: 500px
+}
+
+.App-footer{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    margin-top: 20px;
+    font-family: Helvetica, Arial, sans-serif;
+}
