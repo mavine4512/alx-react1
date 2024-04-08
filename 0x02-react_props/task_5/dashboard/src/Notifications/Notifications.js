@@ -2,6 +2,7 @@ import React from "react";
 import "./Notifications";
 import { getLatestNotification } from "../utils/utils";
 import NotificationItem from "./NotificationItem";
+import PropTypes from "prop-types";
 
 function Notification({ displayDrawer }) {
   const handleButtonClick = () => {
@@ -35,5 +36,12 @@ function Notification({ displayDrawer }) {
     </>
   );
 }
+
+Notification.propTypes = {
+  displayDrawer: PropTypes.bool,
+};
+Notification.defaultProps = {
+  displayDrawer: false,
+};
 
 export default Notification;
