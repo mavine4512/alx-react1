@@ -29,7 +29,7 @@ class App extends Component {
   };
 
   render() {
-    const { isLoggedIn } = this.state;
+    const { isLoggedIn } = this.props;
     return (
       <>
         <div className="App">
