@@ -1,0 +1,18 @@
+.notifications {
+    border-bottom: 4px dotted rgb(243, 108, 108);
+    border-top: 4px dotted rgb(243, 108, 108);
+    border-left: 4px dotted rgb(243, 108, 108);
+    border-right: 4px dotted rgb(243, 108, 108);
+}
+
+ul li[data-priority="default"] {
+    color: rgb(134, 134, 251);
+}
+
+ul li[data-priority="urgent"] {
+    color: rgb(245, 113, 113);
+}
+
+.menuItem{
+    text-align:right;
+}
