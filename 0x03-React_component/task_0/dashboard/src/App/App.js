@@ -21,12 +21,12 @@ const listNotifications = [
 ];
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-    };
-  }
+  static defaultProps = {
+    isLoggedIn: false,
+  };
+  static propTypes = {
+    isLoggedIn: PropTypes.bool,
+  };
 
   render() {
     const { isLoggedIn } = this.state;
@@ -44,13 +44,5 @@ class App extends Component {
     );
   }
 }
-
-App.defaultProps = {
-  isLoggedIn: false,
-};
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool,
-};
 
 export default App;
