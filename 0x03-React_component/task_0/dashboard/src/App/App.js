@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Login from "../Login/Login";
 import Notification from "../Notifications/Notifications";
 import CourseList from "../CourseList/CourseList";
+import PropType from "prop-types";
 import "./App.css";
 import { getLatestNotification } from "../utils/utils";
 
