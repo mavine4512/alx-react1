@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import Login from "../Login/Login";
 import Notification from "../Notifications/Notifications";
 import CourseList from "../CourseList/CourseList";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 import "./App.css";
 import { getLatestNotification } from "../utils/utils";
 
