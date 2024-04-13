@@ -5,14 +5,14 @@ function App() {
   return (
     <>
       <div className="App-header">
-        <img src={holberton_logo} alt="logo" />
+        <img src={holberton_logo} alt="Holberton logo" className="App-header" />
         <h1>School dashboard</h1>
       </div>
-      <div className="App-body">
-        <p>Login to access the full dashboard</p>
+      <div>
+        <p className="App-body">Login to access the full dashboard</p>
       </div>
-      <div className="App-footer">
-        <p>Copyright 2020 - holberton School</p>
+      <div className="div-footer">
+        <p className="App-footer">Copyright 2020 - holberton School</p>
       </div>
     </>
   );
