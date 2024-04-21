@@ -7,7 +7,6 @@ import Notification from "../Notifications/Notifications";
 import CourseList from "../CourseList/CourseList";
 import BodySection from "../BodySection/BodySection";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
-import PropTypes from "props-types";
 import { StyleSheet, css } from "aphrodite";
 import { getLatestNotification } from "../utils/utils";
 
@@ -40,12 +39,12 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    document.addEventListener("keydown", this.handleKeyCombination);
+    document.removeEventListener("keydown", this.handleKeyCombination);
   }
 
   handleKeyCombination(e) {
-    if (e.ctrlKey && e.ctrKey) {
-      alert("Logging You Out");
+    if (e.key === "h" && e.ctrKey) {
+      alert("Logging You out");
       this.prop.logOut();
     }
   }
