@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
@@ -16,7 +16,7 @@ class Notifications extends Component {
     return (
       nextProps.listNotifications.length >
         this.props.listNotifications.length ||
-      nextProps.displayDrawer != this.props.displayDrawer
+      nextProps.displayDrawer !== this.props.displayDrawer
     );
   }
 

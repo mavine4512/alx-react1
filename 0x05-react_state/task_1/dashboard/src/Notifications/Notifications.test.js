@@ -8,7 +8,7 @@ describe("Notification Component", () => {
   let listNotifications;
   let latestNotifications;
 
-  beforeEach(() => {
+  beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
 
