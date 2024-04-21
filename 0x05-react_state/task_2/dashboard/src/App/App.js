@@ -31,7 +31,7 @@ class App extends Component {
     this.listNotifications = [
       { id: 1, name: "default", value: "New course available" },
       { id: 2, name: "urgent", value: "New resume available" },
-      { id: 3, name: "urgent", html: getLatestNotification() },
+      { id: 3, name: "urgent", html: { __html: getLatestNotification() } },
     ];
   }
 
@@ -60,7 +60,7 @@ class App extends Component {
   handleKeyCombination(e) {
     if (e.key === "h" && e.ctrKey) {
       alert("Logging You out");
-      this.prop.logOut();
+      this.props.logOut();
     }
   }
 
