@@ -4,7 +4,7 @@ import App from "./App";
 import { StyleSheetTestUtils } from "aphrodite";
 
 describe("Test App.js", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
   afterAll(() => {
