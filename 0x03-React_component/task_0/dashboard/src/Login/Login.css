@@ -1,11 +1,10 @@
-label,input{
-    margin-left:10px;
-    margin-bottom: 10px;
+:root {
+    --holberton-red: #e1484e;
 }
-button{
-    margin-left:15px;
-}
+
 .App-body{
-    margin-left: 40px;
-    margin-top: 40px;
+    padding: 36px 24px;
+}
+.App-body input {
+    margin: 0 16px 0 8px;
 }

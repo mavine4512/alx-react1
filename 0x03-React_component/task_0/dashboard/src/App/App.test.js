@@ -44,9 +44,14 @@ describe("App", () => {
     expect(wrapper.find(".App").length).toBe(1);
   });
 
+  test("App renders a div with the class: App-body", () => {
+    wrapper.setProps({ isLoggedIn: true });
+    expect(wrapper.find(".App-body").length).toBe(1);
+  });
+
   test("App renders a div with the class: App-footer", () => {
     wrapper.setProps({ isLoggedIn: true });
-    expect(wrapper.find("App-footer").length).toBe(0);
+    expect(wrapper.find(".App-footer").length).toBe(1);
   });
 
   test("check if App component contain the Header component", () => {
