@@ -2,7 +2,7 @@ import React from "react";
 import { getFullYear, getFooterCopy } from "../utils/utils";
 import "./Footer.css";
 
-function Footer() {
+export default function Footer() {
   return (
     <>
       x
@@ -14,5 +14,3 @@ function Footer() {
     </>
   );
 }
-
-export default Footer;

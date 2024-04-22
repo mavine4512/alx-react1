@@ -6,6 +6,7 @@ jest.mock("../utils/utils", () => ({
   getFullYear: jest.fn(() => 2024),
   getFooterCopy: jest.fn(() => "Copyright"),
 }));
+
 describe("Footer Component", () => {
   it("renders without crashing", () => {
     render(<Footer />);
