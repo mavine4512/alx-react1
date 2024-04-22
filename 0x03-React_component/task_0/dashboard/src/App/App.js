@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Login from "../Login/Login";
-import Notification from "../Notifications/Notifications";
+import Notifications from "../Notifications/Notifications";
 import CourseList from "../CourseList/CourseList";
 import PropTypes from "prop-types";
 import "./App.css";
@@ -15,9 +15,9 @@ const listCourses = [
 ];
 
 const listNotifications = [
-  { id: 1, name: "default", value: "New course available" },
-  { id: 2, name: "urgent", value: "New resume available" },
-  { id: 3, name: "urgent", html: getLatestNotification() },
+  { id: 1, type: "default", value: "New course available" },
+  { id: 2, type: "urgent", value: "New resume available" },
+  { id: 3, type: "urgent", html: getLatestNotification() },
 ];
 
 class App extends Component {
@@ -34,7 +34,7 @@ class App extends Component {
       <>
         <div className="App">
           <div className="heading-section">
-            <Notification listNotifications={listNotifications} />
+            <Notifications listNotifications={listNotifications} />
             <Header />
           </div>
           {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}

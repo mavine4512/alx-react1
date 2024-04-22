@@ -1,68 +1,61 @@
-import React from "react";
+import App from "./App";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
 import CourseList from "../CourseList/CourseList";
 import { shallow } from "enzyme";
-import App from "./App";
+import React from "react";
 
-describe("Test App.js", () => {
+describe("App", () => {
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(<App />);
   });
-
-  it("Renders App without crashing", () => {
+  test("App should not rash", () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it("App renders a div with the class: App-body", () => {
+  test("App renders a div with the class: App-header", () => {
     wrapper.setProps({ isLoggedIn: true });
-    expect(wrapper.find(".App-header").length).toBe(0);
+    expect(wrapper.find("App-header").length).toBe(0);
   });
 
-  it("App renders a div with the class: App-body", () => {
+  test("App renders a div with the class: App-body", () => {
     wrapper.setProps({ isLoggedIn: true });
     expect(wrapper.find(".App-body").length).toBe(1);
   });
 
-  it("App renders a div with the class: App-footer", () => {
+  test("App renders a div with the class: App-footer", () => {
     wrapper.setProps({ isLoggedIn: true });
     expect(wrapper.find(".App-footer").length).toBe(1);
   });
 
-  it("App component contains Header Component", () => {
+  test("check if App component contain the Header component", () => {
     wrapper.setProps({ isLoggedIn: true });
-    expect(wrapper.find(<Header />)).toBeTruthy();
+    expect(wrapper.contains(<Header />)).toBeTruthy();
   });
-
-  it("App component contains Login Component", () => {
+  test("check if App component contain the Login component", () => {
     wrapper.setProps({ isLoggedIn: false });
-    expect(wrapper.find(<Login />)).toBeTruthy();
+    expect(wrapper.contains(<Login />)).toBeTruthy();
   });
-
-  it("App component contains Footer Component", () => {
+  test("check if App component contain the Footer component", () => {
     wrapper.setProps({ isLoggedIn: true });
     expect(wrapper.contains(<Footer />)).toBeTruthy();
   });
-
-  it("Test to check that CourseList is not displayed inside App", () => {
+  test("check that CourseList is not displayed ", () => {
     wrapper.setProps({ isLoggedIn: false });
     expect(wrapper.contains(<CourseList />)).toBeFalsy();
   });
 
-  describe("Testing isLoggedIn prop is true />", () => {
+  describe("when isLoggedIn prop is true", () => {
     let wrapper;
-
     beforeEach(() => {
       wrapper = shallow(<App isLoggedIn={true} />);
     });
-
-    it("the login component is not included", () => {
+    test("verify that the Login component is not included", () => {
       expect(wrapper.contains(<Login />)).toBeFalsy();
     });
-
-    it("the CourseList component is included", () => {
+    test("verify that the CourseList component is included", () => {
       expect(wrapper.find("CourseList").length).toBe(1);
     });
   });
