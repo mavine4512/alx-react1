@@ -1,12 +1,20 @@
-.div-footer{
+:root {
+    --holberton-red: #e1484e;
+}
+
+.div-footer {
     border-top: 4px solid rgb(218, 62, 62);
     margin-top: 500px
 }
 
-.App-footer{
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    margin-top: 20px;
-    font-family: Helvetica, Arial, sans-serif;
+.App-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.App-footer p {
+    text-align: center;
+    border-top: 3px solid var(--holberton-red);
+    padding: 16px 0;
 }

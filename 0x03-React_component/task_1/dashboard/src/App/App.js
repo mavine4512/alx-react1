@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./App.css";
 import Footer from "../Footer/Footer";
@@ -15,36 +15,29 @@ const listCourses = [
 ];
 
 const listNotifications = [
-  { id: 1, name: "default", value: "New course available" },
-  { id: 2, name: "urgent", value: "New resume available" },
-  { id: 3, name: "urgent", html: getLatestNotification() },
+  { id: 1, type: "default", value: "New course available" },
+  { id: 2, type: "urgent", value: "New resume available" },
+  { id: 3, type: "urgent", html: getLatestNotification() },
 ];
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-    };
-  }
-
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
   }
 
   handleKeyPress = (e) => {
     if (e.ctrlKey && e.key === "h") {
-      alert("Logging You Out");
+      alert("Logging you out");
       this.prop.logOut();
     }
   };
 
   componentWillUnmount() {
-    document.addEventListener("keydown", this.handleKeyPress);
+    document.removeEventListener("keydown", this.handleKeyPress);
   }
 
   render() {
-    const { isLoggedIn } = this.state;
+    const { isLoggedIn } = this.props;
     return (
       <React.Fragment>
         <Notification listNotifications={listNotifications} />
