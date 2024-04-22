@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, css } from "aphrodite";
 
-class Login extends React.Component() {
+class Login extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +15,7 @@ class Login extends React.Component() {
 
   handleLoginSubmit = (e) => {
     e.preventDefault();
-    this.setState({ isLoggedIn: true });
+    this.props.logIn(this.state.email, this.state.password);
   };
 
   handleChangeEmail = (e) => {
@@ -29,32 +29,30 @@ class Login extends React.Component() {
   };
 
   render() {
-    const { email, password, enableSubmit } = this.state;
     return (
-      <div className={css(loginStyles.appBody)}>
+      <div className={css(loginStyles.login)}>
         <p>Login to access the full dashboard</p>
         <form onSubmit={this.handleLoginSubmit}>
-          <label typeof="email">Email: </label>
+          <label typeof="email">Email:</label>
           <input
             type="email"
             id="email"
-            className={css(loginStyles.inputs)}
-            value={email}
+            value={this.state.email}
+            className={css(loginStyles.loginInput)}
             onChange={this.handleChangeEmail}
           />
           <label typeof="password">Password:</label>
           <input
             type="password"
             id="password"
-            name="password"
-            className={css(loginStyles.inputs)}
-            value={password}
+            value={this.state.password}
+            className={css(loginStyles.loginInput)}
             onChange={this.handleChangePassword}
           />
           <input
             type="submit"
             value="OK"
-            disabled={enableSubmit ? false : true}
+            disabled={this.state.enableSubmit ? false : true}
           />
         </form>
       </div>
@@ -62,16 +60,29 @@ class Login extends React.Component() {
   }
 }
 
+const screenSize = {
+  small: "@media screen and (min-width: 900px)",
+};
 const loginStyles = StyleSheet.create({
-  appBody: {
-    padding: "36px 24px",
-    "@media (max-width: 900px)": {
-      display: "flex",
-      flexDirection: "column",
+  login: {
+    margin: "50px",
+    flexGrow: 1,
+    [screenSize.small]: {
+      marginTop: "10px",
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
     },
   },
-  inputs: {
-    margin: "0, 16px 0 8px",
+  loginInput: {
+    marginLeft: "10px",
+    marginRight: "20px",
+    [screenSize.small]: {
+      display: "block",
+      marginLeft: 0,
+      marginBottom: "10px",
+      marginTop: "10px",
+    },
   },
 });
 

@@ -46,7 +46,7 @@ class Notifications extends Component {
           <p className={menuPStyle}>Your Notifications</p>
         </div>
         {displayDrawer ? (
-          <div className={css(styles.notifications)}>
+          <div className={css(styles.notifications)} id="Notifications">
             <button
               style={{
                 background: "transparent",
@@ -92,18 +92,6 @@ class Notifications extends Component {
     );
   }
 }
-
-// const opacityAnim = {
-//   "0%": { opacity: 0.5 },
-//   "100%": { opacity: 1 },
-// };
-
-// const bounceAnim = {
-//   "0%": { transform: "translateY(0px)" },
-//   "33%": { transform: "translateY(-5px)" },
-//   "66%": { transform: "translateY(5px)" },
-//   "100%": { transform: "translateY(0px)" },
-// };
 
 Notifications.defaultProps = {
   displayDrawer: false,
@@ -159,6 +147,9 @@ const borderKeyframes = {
   "0%": {
     border: `3px dashed ${cssVars.mainColor}`,
   },
+  "100%": {
+    border: `3px dashed ${cssVars.mainColor}`,
+  },
 };
 
 const styles = StyleSheet.create({
@@ -206,7 +197,7 @@ const styles = StyleSheet.create({
     },
   },
   notificationsButtonImage: {
-    width: "10px",
+    width: "20px",
   },
   notificationsP: {
     margin: 0,
