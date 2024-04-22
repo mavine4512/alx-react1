@@ -1,6 +1,6 @@
 import React from "react";
 import CourseListRow from "./CourseListRow";
-import PropTypes from "props-types";
+import PropTypes from "prop-types";
 import "./CourseList.css";
 import CourseShape from "./CourseShape";
 
@@ -31,6 +31,7 @@ const CourseList = ({ listCourses }) => {
     </table>
   );
 };
+
 CourseList.propTypes = {
   listCourses: PropTypes.arrayOf(CourseShape),
 };
