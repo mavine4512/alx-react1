@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <>
       <div className="App-header">
-        <img src={holberton} alt="Holberton Logo" className="App-header" />
+        <img src={holberton} alt="Holberton Logo" />
         <h1>School dashboard</h1>
       </div>
     </>

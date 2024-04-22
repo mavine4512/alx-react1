@@ -2,9 +2,10 @@ import React from "react";
 import "./Notifications";
 import { getLatestNotification } from "../utils/utils";
 import NotificationItem from "./NotificationItem";
+import closeIcon from "../assets/close-icon.png";
 import PropTypes from "prop-types";
 
-function Notification({ displayDrawer }) {
+function Notification({ displayDrawer, listNotifications }) {
   const handleButtonClick = () => {
     console.log("Close button clicked");
   };
@@ -14,14 +15,25 @@ function Notification({ displayDrawer }) {
         <div className="notifications">
           <button
             style={{
-              float: "right",
+              color: "#3a3a3a",
+              fontWeight: "bold",
+              background: "none",
+              border: "none",
+              fontSize: "15px",
+              position: "absolute",
+              right: "3px",
+              cursor: "pointer",
+              outline: "none",
             }}
             aria-label="Close"
             onClick={handleButtonClick}
           >
-            X
+            <img src={closeIcon} alt="Close icon" width={"15px"} />
           </button>
-          <p>Here is the list of notifications</p>
+          {listNotifications.length !== 0 ? (
+            <p>Here is the list of notifications</p>
+          ) : null}
+
           <ul>
             <NotificationItem type="urgent" value="New course available" />
             <NotificationItem type="urgent" value="New resume available" />
