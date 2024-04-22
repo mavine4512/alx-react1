@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "props-types";
+import PropTypes from "prop-types";
 import { StyleSheet, css } from "aphrodite";
 
 const CourseListRow = ({
@@ -32,12 +32,12 @@ const CourseListRow = ({
   );
 };
 
-CourseList.propTypes = {
-  isHeader: ProPTypes.bool,
+CourseListRow.propTypes = {
+  isHeader: PropTypes.bool,
   textFirstCell: PropTypes.string.isRequired,
   textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
-CourseList.defaultProps = {
+CourseListRow.defaultProps = {
   isHeader: false,
   textSecondCell: null,
 };

@@ -5,27 +5,30 @@ import { StyleSheet, css } from "aphrodite";
 function Header() {
   return (
     <>
-      <div className={css(styles["App_header"])}>
+      <div className={css(styles.header)}>
         <img
           src={holberton}
           alt="Holberton Logo"
-          className={css(styles.img["App_header"])}
+          className={css(styles.headerImg)}
         />
         <h1>School dashboard</h1>
       </div>
     </>
   );
 }
+
+const cssVars = {
+  mainColor: "#e01d3f",
+};
 const styles = StyleSheet.create({
-  "div-header": {
-    borderBottom: "4px solid rgb(218, 62, 62)",
+  header: {
     display: "flex",
     alignItems: "center",
-    color: "rgb(174, 39, 39)",
+    color: cssVars.mainColor,
+    fontSize: "20px",
   },
-  img: {
+  headerImg: {
     width: "200px",
-    height: "200px",
   },
 });
 

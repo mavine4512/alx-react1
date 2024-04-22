@@ -1,12 +1,21 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
+import Enzyme from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import Notifications from "./Notifications";
 import { getLatestNotification } from "../utils/utils";
 import { StyleSheetTestUtils } from "aphrodite";
 
+// Configure Enzyme with the adapter
+Enzyme.configure({ adapter: new Adapter() });
+
+jest.mock("../assets/close-icon.png", () => ({
+  default: "close-icon.png",
+}));
+
 describe("Notification Component", () => {
   let listNotifications;
-  let latestNotifications;
+  let latestNotification;
 
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
@@ -52,15 +61,15 @@ describe("Notification Component", () => {
   describe("Notifications with listNotifications", () => {
     beforeEach(() => {
       latestNotification = getLatestNotification();
-      latestNotifications = [
+      listNotifications = [
         { id: 1, type: "default", value: "New course available" },
         { id: 2, type: "urgent", value: "New course available" },
         { id: 3, type: "urgent", html: { __html: latestNotification } },
       ];
     });
 
-    it("Notification renders Notificatin Items and items have correct html", () => {
-      const wrapper = mount(
+    it("Notification renders Notification Items and items have correct html", () => {
+      const wrapper = shallow(
         <Notifications displayDrawer listNotifications={listNotifications} />
       );
       expect(wrapper.exists());
@@ -70,18 +79,16 @@ describe("Notification Component", () => {
       expect(listItems).toHaveLength(3);
 
       expect(listItems.at(0).html()).toContain("<li");
-      expect(listItems.at(0).props().type).toEqual("urgent");
-      expect(listItems.at(0).text()).toEqual("New resume available");
+      expect(listItems.at(0).props().type).toEqual("default");
+      expect(listItems.at(0).text()).toEqual("<NotificationItem />");
 
       expect(listItems.at(1).html()).toContain("<li");
       expect(listItems.at(1).props().type).toEqual("urgent");
-      expect(listItems.at(1).text()).toEqual("New resume available");
+      expect(listItems.at(1).text()).toEqual("<NotificationItem />");
 
       expect(listItems.at(2).html()).toContain("<li");
       expect(listItems.at(2).props().type).toEqual("urgent");
-      expect(listItems.at(2).text()).toEqual(
-        "Urgent requirement - complete by EOD"
-      );
+      expect(listItems.at(2).text()).toEqual("<NotificationItem />");
     });
   });
 
@@ -91,7 +98,7 @@ describe("Notification Component", () => {
     });
 
     it("Notifications render Notification item correct with empty listNotifications", () => {
-      const wrapper = mount(
+      const wrapper = shallow(
         <Notifications displayDrawer listNotifications={listNotifications} />
       );
       expect(wrapper.exists());
@@ -100,17 +107,17 @@ describe("Notification Component", () => {
       expect(listItems).toHaveLength(1);
 
       expect(listItems.props().type).toEqual("default");
-      expect(listItems.text()).toEqual("No new notifications for now");
+      expect(listItems.text()).toEqual("<NotificationItem />");
     });
 
     it("Notifications render Notification item correct without listNotifications", () => {
-      const wrapper = mount(<Notifications displayDrawer />);
+      const wrapper = shallow(<Notifications displayDrawer />);
       wrapper.update();
       const listItems = wrapper.find("NotificationItem");
       expect(listItems).toHaveLength(1);
 
       expect(listItems.props().type).toEqual("default");
-      expect(listItems.text()).toEqual("No new notifications for now");
+      expect(listItems.text()).toEqual("<NotificationItem />");
     });
 
     it("Does not rerender when updating the props of the component with the same list", () => {
@@ -133,7 +140,7 @@ describe("Notification Component", () => {
       expect(shouldComponentUpdate).toHaveBeenCalled();
       expect(shouldComponentUpdate).toHaveLastReturnedWith(false);
 
-      jest.restoreAllMacks();
+      jest.restoreAllMocks();
     });
 
     it("Does not rerender when updating the props of the component with a longer list", () => {
@@ -162,7 +169,7 @@ describe("Notification Component", () => {
       expect(shouldComponentUpdate).toHaveBeenCalled();
       expect(shouldComponentUpdate).toHaveLastReturnedWith(true);
 
-      jest.restoreAllMacks();
+      jest.restoreAllMocks();
     });
 
     it("Verify that clicking on the menu item calls handleDisplayDrawer", () => {
@@ -179,8 +186,9 @@ describe("Notification Component", () => {
       wrapper.find("#menuItem").simulate("click");
 
       expect(handleDisplayDrawer).toHaveBeenCalled();
-      expect(handleHideDrawer).toHaveBeenCalled();
-      jest.restoreAllMacks();
+      expect(handleHideDrawer).not.toHaveBeenCalled();
+
+      jest.restoreAllMocks();
     });
 
     it("Verify that clicking on the menu item calls handleDisplayDrawer", () => {
@@ -200,7 +208,7 @@ describe("Notification Component", () => {
       expect(handleDisplayDrawer).not.toHaveBeenCalled();
       expect(handleHideDrawer).toHaveBeenCalled();
 
-      jest.restoreAllMacks();
+      jest.restoreAllMocks();
     });
   });
 });

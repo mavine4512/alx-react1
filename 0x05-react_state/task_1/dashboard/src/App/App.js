@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -10,18 +10,6 @@ import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBot
 import { StyleSheet, css } from "aphrodite";
 import { getLatestNotification } from "../utils/utils";
 
-const listCourses = [
-  { id: 1, name: "ES6", credit: 60 },
-  { id: 2, name: "Webpack", credit: 20 },
-  { id: 3, name: "React", credit: 40 },
-];
-
-const listNotifications = [
-  { id: 1, name: "default", value: "New course available" },
-  { id: 2, name: "urgent", value: "New resume available" },
-  { id: 3, name: "urgent", html: { __html: getLatestNotification() } },
-];
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,22 +17,34 @@ class App extends Component {
       displayDrawer: false,
     };
 
-    this.handleKeyCombination = this.handleKeyCombination.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
+    this.IsLoggedIn = props.isLoggedIn;
+    this.logOut = props.logOut;
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
+    this.listCourses = [
+      { id: 1, name: "ES6", credit: 60 },
+      { id: 2, name: "Webpack", credit: 20 },
+      { id: 3, name: "React", credit: 40 },
+    ];
+
+    this.listNotifications = [
+      { id: 1, value: "New course available" },
+      { id: 2, value: "New resume available" },
+      { id: 3, html: { __html: getLatestNotification() } },
+    ];
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyCombination);
+    document.addEventListener("keydown", this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyCombination);
+    document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  handleKeyCombination(e) {
-    if (e.key === "h" && e.ctrKey) {
-      alert("Logging You out");
+  handleKeyDown(e) {
+    if (e.key === "h" && e.ctrlKey) {
+      alert("Logging you out");
       this.props.logOut();
     }
   }
@@ -58,41 +58,36 @@ class App extends Component {
   }
 
   render() {
-    const { isLoggedIn, logOut } = this.prop;
+    const { isLoggedIn, logOut } = this.props;
     const { displayDrawer } = this.state;
 
     return (
-      <>
+      <React.Fragment>
         <Notification
-          listNotifications={listNotifications}
+          // listNotifications={this.listNotifications}
           displayDrawer={displayDrawer}
-          handleDisplayDrawer={this.handleDisplayDraw}
+          handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}
         />
-        <div className={css(styles.container)}>
-          <div className={css(styles.app)}>
-            <Header />
-          </div>
-          <div className={css(styles.appBody)}>
-            {isLoggedIn ? (
-              <BodySectionWithMarginBottom title="Course list">
-                <CourseList listCourses={listCourses} />
-              </BodySectionWithMarginBottom>
-            ) : (
-              <BodySectionWithMarginBottom title="Log in to Continue">
-                <Login />
-              </BodySectionWithMarginBottom>
-            )}
-          </div>
-
+        <div className={css(styles.app)}>
+          <Header />
+          {isLoggedIn ? (
+            <BodySectionWithMarginBottom title="Course list">
+              <CourseList listCourses={this.listCourses} />
+            </BodySectionWithMarginBottom>
+          ) : (
+            <BodySectionWithMarginBottom title="Log in to Continue">
+              <Login />
+            </BodySectionWithMarginBottom>
+          )}
           <BodySection title="News from the school">
             <p>Body section text</p>
           </BodySection>
-          <div>
+          <div className={css(styles.footer)}>
             <Footer />
           </div>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }
@@ -109,38 +104,20 @@ App.propTypes = {
   logOut: PropTypes.func,
 };
 
-const cssVars = {
-  mainColor: "#e01d3f",
-};
-
-const screenSize = {
-  small: "@media screen and (min-width:900px)",
-};
-
 const styles = StyleSheet.create({
-  container: {
-    width: "calc(100% - 16px)",
-    marginLeft: "8px",
-    marginRight: "8px",
-  },
   app: {
-    borderBottom: `1px solid ${cssVars.mainColor}`,
+    position: "relative",
+    minHeight: "100vh",
   },
-  appBody: {
-    display: "flex",
-    justifyContent: "center",
-  },
+
   footer: {
-    borderTop: `3px solid ${cssVars.mainColor}`,
-    width: "100%",
     display: "flex",
+    flexDirection: "row",
     justifyContent: "center",
-    position: "fixed",
-    bottom: 0,
+    alignItems: "center",
+    borderTop: "3px solid #E11D3F",
+    padding: "1rem",
     fontStyle: "italic",
-    [screenSize.small]: {
-      position: "static",
-    },
   },
 });
 export default App;
