@@ -29,7 +29,6 @@ class App extends Component {
   };
 
   render() {
-    const { isLoggedIn } = this.props;
     return (
       <>
         <div className="App">
@@ -37,7 +36,11 @@ class App extends Component {
             <Notifications listNotifications={listNotifications} />
             <Header />
           </div>
-          {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+          {this.props.isLoggedIn ? (
+            <CourseList listCourses={listCourses} />
+          ) : (
+            <Login />
+          )}
           <Footer />
         </div>
       </>
