@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -17,9 +17,9 @@ const listCourses = [
 ];
 
 const listNotifications = [
-  { id: 1, name: "default", value: "New course available" },
-  { id: 2, name: "urgent", value: "New resume available" },
-  { id: 3, name: "urgent", html: { __html: getLatestNotification() } },
+  { id: 1, type: "default", value: "New course available" },
+  { id: 2, type: "urgent", value: "New resume available" },
+  { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
 ];
 
 class App extends Component {
@@ -43,8 +43,8 @@ class App extends Component {
   }
 
   handleKeyCombination(e) {
-    if (e.key === "h" && e.ctrKey) {
-      alert("Logging You out");
+    if (e.key === "h" && e.ctrlKey) {
+      alert("Logging you out");
       this.props.logOut();
     }
   }
@@ -58,7 +58,7 @@ class App extends Component {
   }
 
   render() {
-    const { isLoggedIn, logOut } = this.prop;
+    const { isLoggedIn, logOut } = this.props;
     const { displayDrawer } = this.state;
 
     return (
@@ -66,7 +66,7 @@ class App extends Component {
         <Notification
           listNotifications={listNotifications}
           displayDrawer={displayDrawer}
-          handleDisplayDrawer={this.handleDisplayDraw}
+          handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}
         />
         <div className={css(styles.container)}>
@@ -88,7 +88,7 @@ class App extends Component {
           <BodySection title="News from the school">
             <p>Body section text</p>
           </BodySection>
-          <div>
+          <div className={css(styles.footer)}>
             <Footer />
           </div>
         </div>
