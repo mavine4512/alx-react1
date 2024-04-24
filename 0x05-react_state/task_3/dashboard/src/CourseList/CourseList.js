@@ -1,6 +1,6 @@
 import React from "react";
 import CourseListRow from "./CourseListRow";
-import PropTypes from "props-types";
+import PropTypes from "prop-types";
 import CourseShape from "./CourseShape";
 import PropTypes from "props-types";
 import { StyleSheet, css } from "aphrodite";
