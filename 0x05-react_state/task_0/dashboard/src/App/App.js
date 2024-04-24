@@ -66,7 +66,7 @@ class App extends Component {
     return (
       <>
         <Notification
-          listNotifications={listNotifications}
+          listNotifications={this.listNotifications}
           displayDrawer={displayDrawer}
           handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}

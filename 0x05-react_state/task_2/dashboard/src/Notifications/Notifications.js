@@ -93,18 +93,6 @@ class Notifications extends Component {
   }
 }
 
-// const opacityAnim = {
-//   "0%": { opacity: 0.5 },
-//   "100%": { opacity: 1 },
-// };
-
-// const bounceAnim = {
-//   "0%": { transform: "translateY(0px)" },
-//   "33%": { transform: "translateY(-5px)" },
-//   "66%": { transform: "translateY(5px)" },
-//   "100%": { transform: "translateY(0px)" },
-// };
-
 Notifications.defaultProps = {
   displayDrawer: false,
   listNotifications: [],
