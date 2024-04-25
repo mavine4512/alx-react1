@@ -14,7 +14,7 @@ export default function printBestStudents(object) {
 
   const JSObject = filtered.toJS();
 
-  object.keys(JSObject).map((key) => {
+  Object.keys(JSObject).map((key) => {
     JSObject[key].firstName = capFirstLetter(JSObject[key].firstName);
     JSObject[key].lastName = capFirstLetter(JSObject[key].lastName);
     return JSObject[key];
