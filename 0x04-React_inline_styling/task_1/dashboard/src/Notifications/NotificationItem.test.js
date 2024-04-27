@@ -2,6 +2,14 @@ import React from "react";
 import { shallow } from "enzyme";
 import NotificationItem from "./NotificationItem";
 
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
 describe("Testing <NotificationItem />", () => {
   let wrapper;
 

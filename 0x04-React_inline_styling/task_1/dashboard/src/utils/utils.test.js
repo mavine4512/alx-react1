@@ -1,5 +1,13 @@
 import { getFullYear, getFooterCopy, getLatestNotification } from "./utils";
 
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
 describe("Get full year", function () {
   it("should return the correct year", function () {
     const currentYear = new Date().getFullYear();

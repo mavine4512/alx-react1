@@ -2,6 +2,20 @@ import React from "react";
 import { render } from "enzyme";
 import Notifications from "../src/Notifications/Notifications";
 
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
 describe("Notification Component", () => {
   it("render NotificationItem elements instead of li", () => {
     const { getAllByTestId } = render(<Notifications />);
