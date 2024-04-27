@@ -71,7 +71,9 @@ class App extends Component {
           <BodySection title="News from the school">
             <p>Body section text</p>
           </BodySection>
-          <Footer />
+          <div>
+            <Footer />
+          </div>
         </div>
       </React.Fragment>
     );
