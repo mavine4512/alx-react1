@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { StyleSheet, css } from "aphrodite";
 
 const WithLogging = (WrappedComponent) => {
   const name =
@@ -21,4 +22,5 @@ const WithLogging = (WrappedComponent) => {
   return NewComponent;
 };
 
+const styles = StyleSheet.create({});
 export default WithLogging;

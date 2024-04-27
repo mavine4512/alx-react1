@@ -44,4 +44,6 @@ NotificationItem.propTypes = {
   id: PropTypes.number,
 };
 
+const styles = StyleSheet.create({});
+
 export default NotificationItem;
