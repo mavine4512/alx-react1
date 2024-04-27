@@ -42,4 +42,6 @@ CourseList.defaultProps = {
   textSecondCell: null,
 };
 
+const styles = StyleSheet.create({});
+
 export default CourseListRow;
