@@ -6,7 +6,11 @@ describe("Test App.js", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<App />);
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
+
+  afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
 
   it("Renders App without crashing", () => {
