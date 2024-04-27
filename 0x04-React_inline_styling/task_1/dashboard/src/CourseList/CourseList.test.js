@@ -8,6 +8,14 @@ const listCourses = [
   { id: 3, name: "React", credit: 40 },
 ];
 
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
 describe("courseList component tests", () => {
   test("renders CourseList Component without crashing", () => {
     const wrapper = shallow(<CourseList />);
