@@ -6,6 +6,15 @@ jest.mock("../utils/utils", () => ({
   getFullYear: jest.fn(() => 2024),
   getFooterCopy: jest.fn(() => "Copyright"),
 }));
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
 describe("Footer Component", () => {
   it("renders without crashing", () => {
     render(<Footer />);

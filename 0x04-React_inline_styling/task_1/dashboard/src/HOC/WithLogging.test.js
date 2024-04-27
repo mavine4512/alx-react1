@@ -5,6 +5,14 @@ import { jest } from "@jest/globals";
 import WithLogging from "./WithLogging";
 import Login from "../Login/Login";
 
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
 describe("Testing WithLogging HOC", () => {
   it("should make sure console logs was called on unmount and mount with component when the wrapper element is pure html", () => {
     console.log = jest.fn();

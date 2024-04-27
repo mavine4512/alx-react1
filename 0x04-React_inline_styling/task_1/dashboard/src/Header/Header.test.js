@@ -2,6 +2,14 @@ import React from "react";
 import { render } from "@testing-library/react";
 import Header from "./Header";
 
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
 describe("Header Component", () => {
   it("renders without crashing", () => {
     render(<Header />);
