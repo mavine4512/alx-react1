@@ -71,7 +71,7 @@ class App extends Component {
           <BodySection title="News from the school">
             <p>Body section text</p>
           </BodySection>
-          <div>
+          <div className={css(styles.footer)}>
             <Footer />
           </div>
         </div>
@@ -87,6 +87,12 @@ const styles = StyleSheet.create({
     position: "relative",
     fontFamily: "Aricl, Helvetica, sans-serif",
   },
+  body: {
+    maxWidth: "90%",
+    margin: "0 auto",
+    position: "relative",
+  },
+  footer: {},
 });
 
 App.defaultProps = {
