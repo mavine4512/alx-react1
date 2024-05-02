@@ -1,4 +1,4 @@
-import { Seq } from "immutable";
+import { Seq } from 'immutable';
 
 export default function printBestStudents(object) {
   const seq = Seq(object);
@@ -9,12 +9,12 @@ export default function printBestStudents(object) {
   });
 
   function capFirstLetter(string) {
-    string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   const JSObject = filtered.toJS();
 
-  object.keys(JSObject).map((key) => {
+  Object.keys(JSObject).map((key) => {
     JSObject[key].firstName = capFirstLetter(JSObject[key].firstName);
     JSObject[key].lastName = capFirstLetter(JSObject[key].lastName);
     return JSObject[key];
