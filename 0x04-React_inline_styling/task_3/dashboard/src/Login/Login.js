@@ -6,6 +6,7 @@ export default function Login() {
     <div className={css(loginStyles.appBody)}>
       <p>Login to access the full dashboard</p>
       <label typeof="email">Email:</label>
+
       <input type="email" id="enter email" className={css(loginStyles.inputs)}/>
       <label typeof="password">Password:</label>
       <input type="password" id="password" className={css(loginStyles.inputs)}/>

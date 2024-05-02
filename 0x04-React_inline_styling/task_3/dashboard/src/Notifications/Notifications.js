@@ -1,5 +1,4 @@
 import React from "react";
-import { getLatestNotification } from "../utils/utils";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
@@ -114,6 +113,11 @@ const notificationsStyles = StyleSheet.create({
 Notification.defaultProps = {
   displayDrawer: false,
   listNotifications: [],
+};
+
+Notification.propTypes = {
+  displayDrawer: PropTypes.bool,
+  listNotifications: PropTypes.arrayOf(NotificationItemShape),
 };
 
 export default Notification;
