@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, css } from "aphrodite";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
 class NotificationItem extends React.PureComponent {
   constructor(props) {
@@ -8,7 +8,7 @@ class NotificationItem extends React.PureComponent {
   }
   render() {
     const { type, html, value, markAsRead, id } = this.props;
-    const color = css(type === "urgent" ? styles.urgent : styles.default);
+    const color = css(type === 'urgent' ? styles.urgent : styles.default);
     let li;
 
     value
@@ -35,9 +35,9 @@ class NotificationItem extends React.PureComponent {
 }
 
 NotificationItem.defaultProps = {
-  type: "default",
+  type: 'default',
   html: {},
-  value: "",
+  value: '',
   markAsRead: () => {},
   id: NaN,
 };
@@ -53,24 +53,24 @@ NotificationItem.propTypes = {
 };
 
 const screenSize = {
-  small: "@media screen and (max-width: 900px)",
+  small: '@media screen and (max-width: 900px)',
 };
 
 const onSmall = {
-  fontSize: "20px",
-  padding: "10px 8px",
-  borderBottom: "1px solid black",
-  listStyle: "none",
+  fontSize: '20px',
+  padding: '10px 8px',
+  borderBottom: '1px solid black',
+  listStyle: 'none',
 };
 
 const styles = StyleSheet.create({
   default: {
-    color: "blue",
+    color: 'blue',
     [screenSize.small]: onSmall,
   },
 
   urgent: {
-    color: "red",
+    color: 'red',
     [screenSize.small]: onSmall,
   },
 });

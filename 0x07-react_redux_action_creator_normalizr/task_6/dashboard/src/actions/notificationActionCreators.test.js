@@ -2,15 +2,15 @@ import {
   MARK_AS_READ,
   SET_TYPE_FILTER,
   NotificationTypeFilters,
-} from "./notificationActionTypes";
+} from './notificationActionTypes';
 
 import {
   markAsAread,
   setNotificationFilter,
-} from "./notificationActionCreators";
+} from './notificationActionCreators';
 
-describe("action creators", () => {
-  it("markAsRead", () => {
+describe('action creators', () => {
+  it('markAsRead', () => {
     const data = {
       type: MARK_AS_READ,
       index: 1,
@@ -20,10 +20,10 @@ describe("action creators", () => {
     expect(result).toEqual(data);
   });
 
-  it("setNotificationFilter", () => {
+  it('setNotificationFilter', () => {
     const data = {
       type: SET_TYPE_FILTER,
-      filter: "DEFAULT",
+      filter: 'DEFAULT',
     };
     const result = setNotificationFilter(NotificationTypeFilters.DEFAULT);
 
