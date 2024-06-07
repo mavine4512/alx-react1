@@ -1,5 +1,4 @@
 import React from "react";
-import App from "./App";
 
 export const user = {
   email: "",
@@ -7,11 +6,8 @@ export const user = {
   isLoggedIn: false,
 };
 
-export const logout = () => {};
+export const logOut = () => {};
 
-export const AppContext = React.createClass({
-  user,
-  logOut,
-});
+const AppContext = React.createContext({ user, logOut });
 
 export default AppContext;

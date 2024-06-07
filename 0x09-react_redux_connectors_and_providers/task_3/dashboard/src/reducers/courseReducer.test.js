@@ -1,17 +1,20 @@
-import courseReducer from "./courseReducer";
+import { Map, fromJS } from "immutable";
+import courseReducer, { initialCourseState } from "./courseReducer";
 import {
   FETCH_COURSE_SUCCESS,
   SELECT_COURSE,
   UNSELECT_COURSE,
 } from "../actions/courseActionTypes";
 
-describe("courseReducer", function () {
+import coursesNormalizer from "../schema/courses";
+
+describe("courseReducer tests", function () {
   it("Tests that the default state returns an empty arr", function () {
     const state = courseReducer(undefined, {});
-    expect(state).toEqual([]);
-  });
 
-  it("FETCH_COURSE_SUCCESS", function () {
+    expect(state).toEqual(Map(initialCourseState));
+  });
+  it("Tests that FETCH_COURSE_SUCCESS returns the data passed", function () {
     const action = {
       type: FETCH_COURSE_SUCCESS,
       data: [
@@ -55,10 +58,9 @@ describe("courseReducer", function () {
     ];
 
     const state = courseReducer(undefined, action);
-    expect(state).toEqual(expectedData);
+    expect(state.toJS()).toEqual(coursesNormalizer(expectedData));
   });
-
-  it("SELECT_COURSE", function () {
+  it("Tests that SELECT_COURSE returns the data with the right item updated", function () {
     const initialState = [
       {
         id: 1,
@@ -106,11 +108,14 @@ describe("courseReducer", function () {
       },
     ];
 
-    const state = courseReducer(initialState, action);
-    expect(state).toEqual(expectedData);
-  });
+    const state = courseReducer(
+      fromJS(coursesNormalizer(initialState)),
+      action
+    );
 
-  it("UNSELECT_COURSE", function () {
+    expect(state.toJS()).toEqual(coursesNormalizer(expectedData));
+  });
+  it("Tests that UNSELECT_COURSE returns the data with the right item updated", function () {
     const initialState = [
       {
         id: 1,
@@ -158,7 +163,11 @@ describe("courseReducer", function () {
       },
     ];
 
-    const state = courseReducer(initialState, action);
-    expect(state).toEqual(expectedData);
+    const state = courseReducer(
+      fromJS(coursesNormalizer(initialState)),
+      action
+    );
+
+    expect(state.toJS()).toEqual(coursesNormalizer(expectedData));
   });
 });

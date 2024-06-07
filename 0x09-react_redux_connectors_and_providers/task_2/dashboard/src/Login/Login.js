@@ -14,35 +14,37 @@ class Login extends Component {
     this.handleChangePassword = this.handleChangePassword.bind(this);
   }
 
-  handleLoginSubmit(e) {
-    e.preventDefault();
+  handleLoginSubmit(event) {
+    event.preventDefault();
+
     const { email, password } = this.state;
+
     this.props.logIn(email, password);
   }
 
-  handleChangeEmail(e) {
-    const { value } = e.target;
+  handleChangeEmail(event) {
+    const { value } = event.target;
     const { password } = this.state;
 
     if (value !== "" && password !== "") this.setState({ enableSubmit: true });
     else this.setState({ enableSubmit: false });
 
-    this.setState({ email: e.target.value });
+    this.setState({ email: event.target.value });
   }
 
-  handleChangePassword(e) {
-    const { value } = e.target;
+  handleChangePassword(event) {
+    const { value } = event.target;
     const { email } = this.state;
 
     if (email !== "" && value !== "") this.setState({ enableSubmit: true });
     else this.setState({ enableSubmit: false });
 
-    this.setState({ password: e.target.value });
+    this.setState({ password: event.target.value });
   }
 
   render() {
     return (
-      <main role="main" className={css(styles.login)}>
+      <div className={css(styles.login)}>
         <p>Login to access the full dashboard</p>
         <form action="" onSubmit={this.handleLoginSubmit}>
           <label htmlFor="email">Email:</label>
@@ -50,7 +52,7 @@ class Login extends Component {
             type="email"
             id="email"
             name="email"
-            className={css(styles.inp)}
+            className={css(styles.loginInput)}
             value={this.state.email}
             onChange={this.handleChangeEmail}
           />
@@ -59,19 +61,13 @@ class Login extends Component {
             type="password"
             id="password"
             name="password"
-            className={css(styles.inp)}
+            className={css(styles.loginInput)}
             value={this.state.password}
             onChange={this.handleChangePassword}
           />
-          <button
-            type="submit"
-            className={css(styles.btn)}
-            disabled={!this.state.enableSubmit}
-          >
-            OK
-          </button>
+          <input type="submit" disabled={!this.state.enableSubmit} />
         </form>
-      </main>
+      </div>
     );
   }
 }
@@ -82,27 +78,24 @@ const screenSize = {
 
 const styles = StyleSheet.create({
   login: {
-    padding: "16px 24px",
+    margin: "50px",
+    flexGrow: 1,
     [screenSize.small]: {
-      width: "90%",
-      padding: 0,
+      marginTop: "10px",
+      marginLeft: 0,
+      marginRight: 0,
+      marginBottom: 0,
     },
   },
-  inp: {
-    margin: "4px",
+
+  loginInput: {
+    marginLeft: "10px",
+    marginRight: "20px",
     [screenSize.small]: {
       display: "block",
-      border: "none",
-      margin: 0,
-    },
-  },
-  btn: {
-    margin: "4px",
-    cursor: "pointer",
-    [screenSize.small]: {
-      width: "32px",
-      display: "block",
-      margin: 0,
+      marginLeft: 0,
+      marginTop: "10px",
+      marginBottom: "10px",
     },
   },
 });

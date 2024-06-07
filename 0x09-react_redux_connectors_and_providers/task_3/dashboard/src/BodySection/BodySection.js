@@ -6,11 +6,12 @@ class BodySection extends Component {
   constructor(props) {
     super(props);
   }
-  return() {
+
+  render() {
     const { children, title } = this.props;
     return (
       <div className={css(styles.bodySection)}>
-        <h2 className={css(styles.heading)}>{title}</h2>
+        <h2 className={css(styles.bodySectionH2)}>{title}</h2>
         {children}
       </div>
     );
@@ -32,16 +33,17 @@ const screenSize = {
 const styles = StyleSheet.create({
   bodySection: {
     display: "flex",
-    marginTop: "160px",
-    width: "100%",
     flexWrap: "wrap",
-    padding: "32px",
+    width: "100%",
     [screenSize.small]: {
-      margin: "240px 0 -240px",
-      padding: "16px",
+      boxSizing: "border-box",
+      paddingLeft: "50px",
+      paddingRight: "50px",
+      paddingBottom: "20px",
     },
   },
-  heading: {
+
+  bodySectionH2: {
     width: "100%",
   },
 });

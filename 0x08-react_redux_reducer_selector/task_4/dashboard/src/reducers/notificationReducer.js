@@ -2,15 +2,28 @@ import {
   FETCH_NOTIFICATIONS_SUCCESS,
   MARK_AS_READ,
   SET_TYPE_FILTER,
-} from "../actions/notificationActionTypes";
+} from '../actions/notificationActionTypes';
 
 export const initialNotificationState = {
   notifications: [],
-  filter: "DEFAULT",
+  filter: 'DEFAULT',
 };
 
 const notificationReducer = (state = initialNotificationState, action) => {
   switch (action.type) {
+    /*
+    case FETCH_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        notifications: action.data.map((notification) => {
+          return {
+            ...notification,
+            isRead: false,
+          };
+        }),
+      };
+      */
+
     case MARK_AS_READ:
       return {
         ...state,

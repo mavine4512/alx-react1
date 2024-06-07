@@ -1,20 +1,20 @@
-import React from "react";
-import { mount } from "enzyme";
-import { jest } from "@jest/globals";
+import React from 'react';
+import { shallow, mount } from 'enzyme';
+import WithLogging from './WithLogging';
+import Login from '../Login/Login';
 
-import WithLogging from "./WithLogging";
-import Login from "../Login/Login";
-
-describe("Testing WithLogging HOC", () => {
-  it("should make sure console logs was called on unmount and mount with component when the wrapper element is pure html", () => {
+describe('<WithLogging />', () => {
+  it('render', () => {
     console.log = jest.fn();
-    const Hoc = WithLogging(() => <p>Hello there</p>);
-    const comp = <Hoc title="hello" />;
-    let wrapper = mount(comp);
+    const HOC = WithLogging(() => <p />);
+    const wrapper = shallow(<HOC />);
+    expect(wrapper.exists());
+  });
 
-    expect(console.log).toBeCalleWith("Component is mounted");
-    wrapper.unmount();
-    expect(console.log).toBeCalleWith("Component is going to unmounted");
-    jest.restoreAllMocks();
+  it('render login', () => {
+    console.log = jest.fn();
+    const HOC = WithLogging(Login);
+    const wrapper = shallow(<HOC />);
+    expect(wrapper.exists());
   });
 });

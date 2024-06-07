@@ -3,7 +3,7 @@ import {
   LOGOUT,
   DISPLAY_NOTIFICATION_DRAWER,
   HIDE_NOTIFICATION_DRAWER,
-} from "./uiActionTypes";
+} from './uiActionTypes';
 
 export const login = (email, password) => {
   return {

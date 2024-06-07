@@ -2,7 +2,7 @@ import {
   FETCH_COURSE_SUCCESS,
   SELECT_COURSE,
   UNSELECT_COURSE,
-} from "../actions/courseActionTypes";
+} from '../actions/courseActionTypes';
 
 const courseReducer = (state = [], action) => {
   switch (action.type) {

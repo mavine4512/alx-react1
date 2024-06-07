@@ -1,7 +1,8 @@
 {
-  "name": "dashboard",
-  "version": "0.1.0",
-  "private": true,
+  "name": "task_5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -25,28 +26,14 @@
     "style-loader": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "webpack-dev-server --mode development --config config/webpack.config.js",
-    "test": "jest"
+    "build": "webpack --mode production --config config/webpack.config.js",
+    "start": "webpack serve --open --mode development --config config/webpack.config.js",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/preset-env": "^7.12.16",
@@ -64,8 +51,8 @@
       "<rootDir>/config/setupTests.js"
     ],
     "moduleNameMapper": {
-      "\\.(css)$": "<rootDir>/__mocks__/styleMock.js",
-      "\\.(jpg|png)$": "<rootDir>/__mocks__/fileMock.js"
+      "\\.(css|sass)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(jpg|jpeg|png|gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
     }
   }
 }

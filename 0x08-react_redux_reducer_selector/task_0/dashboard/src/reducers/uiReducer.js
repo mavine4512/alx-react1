@@ -5,7 +5,7 @@ import {
   HIDE_NOTIFICATION_DRAWER,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-} from "../actions/uiActionTypes";
+} from '../actions/uiActionTypes';
 
 export const initialState = {
   isNotificationDrawerVisible: false,

@@ -1,10 +1,10 @@
-import React from "react";
-import { shallow } from "enzyme";
-import Notifications from "./Notifications";
-import { getLatestNotification } from "../utils/utils";
-import { StyleSheetTestUtils } from "aphrodite";
+import React from 'react';
+import { shallow } from 'enzyme';
+import Notifications from './Notifications';
+import { getLatestNotification } from '../utils/utils';
+import { StyleSheetTestUtils } from 'aphrodite';
 
-describe("<Notification />", () => {
+describe('<Notification />', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
@@ -12,28 +12,28 @@ describe("<Notification />", () => {
     StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
 
-  it("render without crashing", () => {
+  it('render without crashing', () => {
     const wrapper = shallow(<Notifications />);
     expect(wrapper.exists());
   });
 
-  it("Notification Item with html", () => {
+  it('Notification Item with html', () => {
     const wrapper = shallow(<Notifications displayDrawer />);
-    const nItem = wrapper.find("NotificationItem");
+    const nItem = wrapper.find('NotificationItem');
     expect(wrapper.exists());
     expect(nItem.exists());
     expect(nItem).toBeDefined();
   });
-  it("Notification with displayDrawer false", () => {
+  it('Notification with displayDrawer false', () => {
     const wrapper = shallow(<Notifications />);
-    const dNoti = wrapper.find("div.Notifications");
+    const dNoti = wrapper.find('div.Notifications');
     expect(wrapper.exists());
     expect(dNoti.exists());
     expect(dNoti).toHaveLength(0);
   });
 });
 
-describe("listNotifications with values", () => {
+describe('listNotifications with values', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
@@ -47,17 +47,17 @@ describe("listNotifications with values", () => {
   beforeEach(() => {
     latestNotification = getLatestNotification();
     listNotifications = [
-      { id: 1, type: "default", value: "New course available" },
-      { id: 2, type: "urgent", value: "New resume available" },
-      { id: 3, type: "urgent", html: { __html: latestNotification } },
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+      { id: 3, type: 'urgent', html: { __html: latestNotification } },
     ];
   });
 
-  it("values", () => {
+  it('values', () => {
     const wrapper = shallow(
       <Notifications displayDrawer listNotifications={listNotifications} />
     );
-    const nItem = wrapper.find("NotificationItem");
+    const nItem = wrapper.find('NotificationItem');
     expect(wrapper.exists());
     expect(nItem.exists());
     expect(nItem).toBeDefined();
@@ -65,7 +65,7 @@ describe("listNotifications with values", () => {
   });
 });
 
-describe("listNotifications without values", () => {
+describe('listNotifications without values', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
@@ -78,25 +78,25 @@ describe("listNotifications without values", () => {
     listNotifications = [];
   });
 
-  it("empty", () => {
+  it('empty', () => {
     const wrapper = shallow(
       <Notifications displayDrawer listNotifications={listNotifications} />
     );
-    const nItem = wrapper.find("NotificationItem");
+    const nItem = wrapper.find('NotificationItem');
     expect(wrapper.exists());
     expect(nItem.exists());
     expect(nItem).toHaveLength(1);
   });
 
-  it("without listNotifications", () => {
+  it('without listNotifications', () => {
     const wrapper = shallow(<Notifications displayDrawer />);
-    const nItem = wrapper.find("NotificationItem");
+    const nItem = wrapper.find('NotificationItem');
     expect(wrapper.exists());
     expect(nItem.exists());
   });
 });
 
-describe("markAsRead", () => {
+describe('markAsRead', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
@@ -104,23 +104,78 @@ describe("markAsRead", () => {
     StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
 
-  it("console.log", () => {
+  it('console.log', () => {
     const wrapper = shallow(<Notifications displayDrawer />);
     expect(wrapper.exists());
+    /*
+    console.log = jest.fn();
+    const instance = wrapper.instance();
+    const id = 0;
+    instance.markAsRead(id);
+    expect(console.log).toHaveBeenCalledWith(
+      `Notification ${id} has been marked as read`
+    );
+    */
     jest.restoreAllMocks();
   });
 });
 
-describe("updating the props of the component", () => {
+describe('updating the props of the component', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
   afterAll(() => {
     StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
+  /*
+  it('with the same list, the component doesn’t rerender', () => {
+    const listNotifications = [
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+    ];
+    const wrapper = shallow(
+      <Notifications displayDrawer listNotifications={listNotifications} />
+    );
+    const shouldComponentUpdate = jest.spyOn(
+      Notifications.prototype,
+      'shouldComponentUpdate'
+    );
+    expect(wrapper.exists());
+    wrapper.setProps({ listNotifications: listNotifications });
+    expect(shouldComponentUpdate).toHaveBeenCalled();
+    expect(shouldComponentUpdate).toHaveLastReturnedWith(false);
+    jest.restoreAllMocks();
+  });
+
+  it('with a longer list, the component does rerender', () => {
+    const listNotifications = [
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+    ];
+    let latestNotification;
+    const listNotifications2 = [
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+      { id: 3, type: 'urgent', html: { __html: latestNotification } },
+    ];
+    console.log(listNotifications);
+    const wrapper = shallow(
+      <Notifications displayDrawer listNotifications={listNotifications} />
+    );
+    const shouldComponentUpdate = jest.spyOn(
+      Notifications.prototype,
+      'shouldComponentUpdate'
+    );
+    expect(wrapper.exists());
+    wrapper.setProps({ listNotifications: listNotifications2 });
+    expect(shouldComponentUpdate).toHaveBeenCalled();
+    expect(shouldComponentUpdate).toHaveLastReturnedWith(true);
+    jest.restoreAllMocks();
+  });
+  */
 });
 
-describe("displayDrawer", () => {
+describe('displayDrawer', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
@@ -128,7 +183,7 @@ describe("displayDrawer", () => {
     StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
 
-  it("clicking on the menu item calls handleDisplayDrawer", () => {
+  it('clicking on the menu item calls handleDisplayDrawer', () => {
     const handleDisplayDrawer = jest.fn();
     const handleHideDrawer = jest.fn();
     const wrapper = shallow(
@@ -137,13 +192,13 @@ describe("displayDrawer", () => {
         handleHideDrawer={handleHideDrawer}
       />
     );
-    wrapper.find("#menuItem").simulate("click");
+    wrapper.find('#menuItem').simulate('click');
     expect(handleDisplayDrawer).toHaveBeenCalled();
     expect(handleHideDrawer).not.toHaveBeenCalled();
     jest.restoreAllMocks();
   });
 
-  it("clicking on the button calls handleHideDrawer", () => {
+  it('clicking on the button calls handleHideDrawer', () => {
     const handleDisplayDrawer = jest.fn();
     const handleHideDrawer = jest.fn();
     const wrapper = shallow(
@@ -153,7 +208,7 @@ describe("displayDrawer", () => {
         handleHideDrawer={handleHideDrawer}
       />
     );
-    wrapper.find("#close").simulate("click");
+    wrapper.find('#close').simulate('click');
     expect(handleDisplayDrawer).not.toHaveBeenCalled();
     expect(handleHideDrawer).toHaveBeenCalled();
     jest.restoreAllMocks();

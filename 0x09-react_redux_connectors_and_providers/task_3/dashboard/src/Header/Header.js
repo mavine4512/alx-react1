@@ -82,4 +82,6 @@ const mapDispatchToProps = {
   logout,
 };
 
+// export default Header;
+
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
