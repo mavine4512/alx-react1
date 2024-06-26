@@ -3,42 +3,44 @@ import {
   LOGOUT,
   DISPLAY_NOTIFICATION_DRAWER,
   HIDE_NOTIFICATION_DRAWER,
-} from './uiActionTypes';
-
+} from "./uiActionTypes";
 import {
   login,
   logout,
-  displayNotificationDrawer,
   hideNotificationDrawer,
-} from './uiActionCreators';
+  displayNotificationDrawer,
+} from "./uiActionCreators";
+import configureStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import fetchMock from "fetch-mock";
 
-describe('action creators', () => {
-  it('login', () => {
-    const user = { email: 'account@domain.extension', password: 123456789 };
-    const data = { type: LOGIN, user };
-    const result = login(user.email, user.password);
+const middleWares = [thunk];
+const mockStore = configureStore(middleWares);
 
-    expect(result).toEqual(data);
+describe("tests for UI notification action creators", () => {
+  it("should create proper action for login", () => {
+    const email = "james@gmail.com";
+    const password = "heheheh";
+
+    expect(login(email, password)).toEqual({
+      type: LOGIN,
+      user: { email: "james@gmail.com", password: "heheheh" },
+    });
   });
 
-  it('logout', () => {
-    const data = { type: LOGOUT };
-    const result = logout();
-
-    expect(result).toEqual(data);
+  it("should create proper action for logout", () => {
+    expect(logout()).toEqual({ type: LOGOUT });
   });
 
-  it('displayNotificationDrawer', () => {
-    const data = { type: DISPLAY_NOTIFICATION_DRAWER };
-    const result = displayNotificationDrawer();
-
-    expect(result).toEqual(data);
+  it("should create proper action for displaying notification drawer", () => {
+    expect(displayNotificationDrawer()).toEqual({
+      type: DISPLAY_NOTIFICATION_DRAWER,
+    });
   });
 
-  it('hideNotificationDrawer', () => {
-    const data = { type: HIDE_NOTIFICATION_DRAWER };
-    const result = hideNotificationDrawer();
-
-    expect(result).toEqual(data);
+  it("should create proper action for hiding notification drawer", () => {
+    expect(hideNotificationDrawer()).toEqual({
+      type: HIDE_NOTIFICATION_DRAWER,
+    });
   });
 });

@@ -1,77 +1,66 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { StyleSheet, css } from 'aphrodite';
+import React, { PureComponent } from "react";
+import { StyleSheet, css } from "aphrodite";
+import PropTypes from "prop-types";
 
-class NotificationItem extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
+class NotificationItem extends PureComponent {
   render() {
-    const { type, html, value, markAsRead, id } = this.props;
-    const color = css(type === 'urgent' ? styles.urgent : styles.default);
-    let li;
-
-    value
-      ? (li = (
+    const { type, value, html, markAsRead, id } = this.props;
+    return (
+      <>
+        {value ? (
           <li
-            className={color}
             data-notification-type={type}
             onClick={() => markAsRead(id)}
+            className={
+              type === "default" ? css(styles.default) : css(styles.urgent)
+            }
           >
             {value}
           </li>
-        ))
-      : (li = (
+        ) : null}
+        {html ? (
           <li
-            className={color}
-            data-notification-type={type}
-            dangerouslySetInnerHTML={html}
+            data-urgent
+            className={css(styles.urgent)}
+            dangerouslySetInnerHTML={{ __html: html }}
             onClick={() => markAsRead(id)}
           ></li>
-        ));
-
-    return li;
+        ) : null}
+      </>
+    );
   }
 }
 
-NotificationItem.defaultProps = {
-  type: 'default',
-  html: {},
-  value: '',
-  markAsRead: () => {},
-  id: NaN,
-};
-
 NotificationItem.propTypes = {
-  type: PropTypes.string,
-  html: PropTypes.shape({
-    __html: PropTypes.string,
+  __html: PropTypes.shape({
+    html: PropTypes.string,
   }),
+  type: PropTypes.string,
   value: PropTypes.string,
-  markAsRead: PropTypes.func,
-  id: PropTypes.number,
 };
 
-const screenSize = {
-  small: '@media screen and (max-width: 900px)',
-};
-
-const onSmall = {
-  fontSize: '20px',
-  padding: '10px 8px',
-  borderBottom: '1px solid black',
-  listStyle: 'none',
+NotificationItem.defaultProps = {
+  type: "default",
 };
 
 const styles = StyleSheet.create({
   default: {
-    color: 'blue',
-    [screenSize.small]: onSmall,
+    color: "blue",
+    "@media (max-width: 900px)": {
+      borderBottom: "1px solid black",
+      listStyle: "none",
+      fontSize: "20px",
+      padding: "10px 8px",
+    },
   },
-
   urgent: {
-    color: 'red',
-    [screenSize.small]: onSmall,
+    color: "red",
+    "@media (max-width: 900px)": {
+      borderBottom: "1px solid black",
+      listStyle: "none",
+      fontSize: "20px",
+      padding: "10px 8px",
+    },
   },
 });
 

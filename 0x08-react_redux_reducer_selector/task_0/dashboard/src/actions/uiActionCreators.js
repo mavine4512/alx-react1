@@ -3,7 +3,10 @@ import {
   LOGOUT,
   DISPLAY_NOTIFICATION_DRAWER,
   HIDE_NOTIFICATION_DRAWER,
-} from './uiActionTypes';
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from "./uiActionTypes";
+import fetch from "node-fetch";
 
 export const login = (email, password) => {
   return {
@@ -51,7 +54,7 @@ export const loginFailure = () => {
 export const loginRequest = (email, password) => {
   return (dispatch) => {
     dispatch(login(email, password));
-    return fetch('http://localhost:3000/login-success.json')
+    return fetch("http://localhost:3000/login-success.json")
       .then((res) => res.json())
       .then((json) => dispatch(loginSuccess()))
       .catch((error) => dispatch(loginFailure()));

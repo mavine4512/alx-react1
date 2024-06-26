@@ -3,39 +3,39 @@ import {
   LOGOUT,
   DISPLAY_NOTIFICATION_DRAWER,
   HIDE_NOTIFICATION_DRAWER,
-} from './uiActionTypes';
+} from "./uiActionTypes";
 
 import {
   login,
   logout,
   displayNotificationDrawer,
   hideNotificationDrawer,
-} from './uiActionCreators';
+} from "./uiActionCreators";
 
-describe('action creators', () => {
-  it('login', () => {
-    const user = { email: 'account@domain.extension', password: 123456789 };
+describe("action creators", () => {
+  it("login", () => {
+    const user = { email: "account@domain.extension", password: 123456789 };
     const data = { type: LOGIN, user };
     const result = login(user.email, user.password);
 
     expect(result).toEqual(data);
   });
 
-  it('logout', () => {
+  it("logout", () => {
     const data = { type: LOGOUT };
     const result = logout();
 
     expect(result).toEqual(data);
   });
 
-  it('displayNotificationDrawer', () => {
+  it("displayNotificationDrawer", () => {
     const data = { type: DISPLAY_NOTIFICATION_DRAWER };
     const result = displayNotificationDrawer();
 
     expect(result).toEqual(data);
   });
 
-  it('hideNotificationDrawer', () => {
+  it("hideNotificationDrawer", () => {
     const data = { type: HIDE_NOTIFICATION_DRAWER };
     const result = hideNotificationDrawer();
 
