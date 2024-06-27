@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from "react";
 import Footer from "./Footer";
 import { getFullYear, getFooterCopy } from "../utils/utils";
