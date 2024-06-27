@@ -1,48 +1,54 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Login from './Login';
-import { StyleSheetTestUtils } from 'aphrodite';
+import React from "react";
+import { StyleSheetTestUtils } from "aphrodite";
+import Login from "./Login";
+import { shallow } from "enzyme";
 
-describe('<Login />', () => {
-  beforeAll(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
 
-  const wrapper = shallow(<Login />);
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
 
-  it('render without crashing', () => {
-    expect(wrapper.exists());
-  });
+describe("rendering components", () => {
+  it("renders Login component without crashing", () => {
+    const wrapper = shallow(<Login />);
 
-  it('labels', () => {
-    expect(wrapper.find('form label')).toHaveLength(2);
+    expect(wrapper.exists()).toBe(true);
   });
 
-  it('inputs', () => {
-    expect(wrapper.find('form input')).toHaveLength(2);
+  it("Login component renders 2 <input> and 2 <label> tags", () => {
+    const wrapper = shallow(<Login />);
+
+    expect(wrapper.find("label")).toHaveLength(2);
+    expect(wrapper.find("input")).toHaveLength(3);
+  });
+});
+
+describe("test for submit input on form", () => {
+  it("should be disabled by default", () => {
+    const wrapper = shallow(<Login />);
+    expect(wrapper.find(".yellowBorder_1sbjbp4").props().disabled).toBe(true);
   });
 
-  it('button', () => {
-    const button = wrapper.find("form button[type='submit']");
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toEqual(true);
-  });
+  it("should be enabled when password and email have value", () => {
+    const wrapper = shallow(<Login />);
+    const email = {
+      target: {
+        name: "email",
+        value: "email",
+      },
+    };
+    const password = {
+      target: {
+        name: "password",
+        value: "password",
+      },
+    };
 
-  it('form working', () => {
-    const email = wrapper.find('#email');
-    const password = wrapper.find('#password');
-    email.simulate('change', {
-      target: { name: 'email', value: 'account@domain.ext' },
-    });
-    let submit = wrapper.find("form button[type='submit']");
-    expect(submit.prop('disabled')).toEqual(true);
-    password.simulate('change', {
-      target: { name: 'password', value: 'qwerty' },
-    });
-    submit = wrapper.find("form button[type='submit']");
-    expect(submit.prop('disabled')).toEqual(false);
+    wrapper.find({ name: "email" }).simulate("change", email);
+    wrapper.find({ name: "password" }).simulate("change", password);
+    expect(wrapper.find(".yellowBorder_1sbjbp4").prop("disabled")).toBe(false);
   });
 });
