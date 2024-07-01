@@ -1,108 +1,68 @@
-import React, { Component } from 'react';
-import { StyleSheet, css } from 'aphrodite';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, css } from "aphrodite";
+import PropTypes from "prop-types";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      enableSubmit: false,
-    };
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
-  }
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [enableSubmit, setEnableSubmit] = useState(false);
 
-  handleLoginSubmit(e) {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
-    this.props.logIn(email, password);
-  }
+    props.logIn(e.target.elements.email.value, e.target.elements.password.value);
+  };
 
-  handleChangeEmail(e) {
-    const { value } = e.target;
-    const { password } = this.state;
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
 
-    if (value !== '' && password !== '') this.setState({ enableSubmit: true });
-    else this.setState({ enableSubmit: false });
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
-    this.setState({ email: e.target.value });
-  }
+  useEffect(() => {
+    if (email !== "" && password !== "") {
+      setEnableSubmit(true);
+    } else {
+      if (enableSubmit !== false) {
+        setEnableSubmit(false);
+      }
+    }
+  }, [email, password]);
 
-  handleChangePassword(e) {
-    const { value } = e.target;
-    const { email } = this.state;
-
-    if (email !== '' && value !== '') this.setState({ enableSubmit: true });
-    else this.setState({ enableSubmit: false });
-
-    this.setState({ password: e.target.value });
-  }
-
-  render() {
-    return (
-      <main role='main' className={css(styles.login)}>
+  return (
+    <React.Fragment>
+      <div className={css(styles["App-body"])}>
         <p>Login to access the full dashboard</p>
-        <form action='' onSubmit={this.handleLoginSubmit}>
-          <label htmlFor='email'>Email:</label>
-          <input
-            type='email'
-            id='email'
-            name='email'
-            className={css(styles.inp)}
-            value={this.state.email}
-            onChange={this.handleChangeEmail}
-          />
-          <label htmlFor='password'>Password:</label>
-          <input
-            type='password'
-            id='password'
-            name='password'
-            className={css(styles.inp)}
-            value={this.state.password}
-            onChange={this.handleChangePassword}
-          />
-          <button
-            type='submit'
-            className={css(styles.btn)}
-            disabled={!this.state.enableSubmit}
-          >
-            OK
-          </button>
+        <form onSubmit={handleLoginSubmit}>
+          <label htmlFor="email">Email:</label>
+          <input className={css(styles.input)} type="email" id="email" name="email" value={email} onChange={handleChangeEmail} />
+          <label htmlFor="password">Password:</label>
+          <input className={css(styles.input)} type="password" id="password" name="password" value={password} onChange={handleChangePassword} />
+          <input type="submit" value="Ok" disabled={!enableSubmit} />
         </form>
-      </main>
-    );
-  }
+      </div>
+    </React.Fragment>
+  );
 }
-const screenSize = {
-  small: '@media screen and (max-width: 900px)',
+
+Login.propTypes = {
+  logIn: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
-  login: {
-    padding: '16px 24px',
-    [screenSize.small]: {
-      width: '90%',
-      padding: 0,
+  "App-body": {
+    fontSize: "1rem",
+    padding: "2em",
+    height: "45%",
+    "@media (max-width: 900px)": {
+      display: "flex",
+      flexDirection: "column",
     },
   },
-  inp: {
-    margin: '4px',
-    [screenSize.small]: {
-      display: 'block',
-      border: 'none',
-      margin: 0,
-    },
-  },
-  btn: {
-    margin: '4px',
-    cursor: 'pointer',
-    [screenSize.small]: {
-      width: '32px',
-      display: 'block',
-      margin: 0,
-    },
+
+  input: {
+    margin: "10px",
   },
 });
 
