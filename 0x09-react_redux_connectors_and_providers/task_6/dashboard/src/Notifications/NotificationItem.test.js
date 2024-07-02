@@ -1,37 +1,33 @@
-import React from "react";
-import { shallow } from "enzyme";
-import NotificationItem from "./NotificationItem";
-import { StyleSheetTestUtils } from "aphrodite";
+import React from 'react';
+import NotificationItem from './NotificationItem';
+import { shallow } from 'enzyme';
+import { StyleSheetTestUtils } from 'aphrodite';
 
-describe("<NotificationItem />", () => {
-  beforeAll(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
-
-  it("render without crashing", () => {
-    const wrapper = shallow(<NotificationItem />);
-    expect(wrapper.exists());
-  });
-
-  it("renders type and value props", () => {
-    const wrapper = shallow(<NotificationItem type="default" value="test" />);
-    const li = wrapper.find("li");
-    expect(wrapper.exists());
-    expect(li.exists());
-    expect(li).toHaveLength(1);
-    expect(li.text()).toEqual("test");
-    expect(li.prop("data-notification-type")).toEqual("default");
-  });
-
-  it("renders html prop", () => {
-    const wrapper = shallow(
-      <NotificationItem html={{ __html: "<u>test</u>" }} />
-    );
-    const li = wrapper.find("li");
-    expect(wrapper.exists());
-    expect(li.exists());
-  });
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
 });
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+describe('NotificationItem component', () => {
+  it('renders without crashing',() => {
+    const wrapper = shallow(<NotificationItem/>);
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it('renders the correct html (with given dummy  type and value props)', () => {
+    const wrapper = shallow(<NotificationItem type="urgent" value="test"/>);
+    const html = wrapper.html()
+    // console.log(wrapper.html());
+    expect(html).toBe('<li class="urgent_1uqgzdq-o_O-listItem_1fp99j6" data-notification-type="urgent">test</li>')
+  })
+
+  it('renders the correct html (with given dummy html props)', () => {
+    const wrapper = shallow(<NotificationItem html={{ __html: '<u>test</u>' }} />);
+    const html = wrapper.html()
+    expect(html).toBe('<li class="default_1y9uryn-o_O-listItem_1fp99j6" data-notification-type="default"><u>test</u></li>')
+  })
+
+})

@@ -1,41 +1,50 @@
-import {
-  SELECT_COURSE,
-  UNSELECT_COURSE,
-  FETCH_COURSE_SUCCESS,
-} from "./courseActionTypes";
+import { SELECT_COURSE, UNSELECT_COURSE, FETCH_COURSE_SUCCESS } from "./courseActionTypes.js";
 
-import "node-fetch";
 
-export const selectCourse = (index) => {
-  return {
-    type: SELECT_COURSE,
-    index,
-  };
-};
 
-export const boundSelectCourse = (index) => dispatch(selectCourse(index));
+export function selectCourse(index){
+  return { type: SELECT_COURSE, index: index}
+}
 
-export const unSelectCourse = (index) => {
-  return {
-    type: UNSELECT_COURSE,
-    index,
-  };
-};
+export function unSelectCourse(index){
+  return { type: UNSELECT_COURSE, index: index}
+}
 
-export const boundUnSelectCourse = (index) => dispatch(unSelectCourse(index));
-
-export const setCourses = (data) => {
+export function fetchCourseSuccess() {
   return {
     type: FETCH_COURSE_SUCCESS,
-    data,
-  };
-};
+    data: [
+      {
+        id: 1,
+        name: "ES6",
+        credit: 60
+      },
+      {
+        id: 2,
+        name: "Webpack",
+        credit: 20
+      },
+      {
+        id: 3,
+        name: "React",
+        credit: 40
+      }
+    ]
+  }  
+}
 
-export const fetchCourses = () => {
+export function setCourses(data) {
+  return {type: FETCH_COURSE_SUCCESS, data}
+}
+
+export function fetchCourses() {
   return (dispatch) => {
-    return fetch("./courses.json")
-      .then((res) => res.json())
+    return fetch("/courses.json")
+      .then((response) => response.json())
       .then((data) => dispatch(setCourses(data)))
-      .catch((error) => {});
-  };
-};
+  }
+}
+
+export function onChangeRow(id, checked) {
+  return checked == true ? selectCourse(id) : unSelectCourse(id)
+}

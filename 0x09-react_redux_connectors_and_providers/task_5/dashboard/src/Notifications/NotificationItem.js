@@ -1,78 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, css } from "aphrodite";
-
-class NotificationItem extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const { type, html, value, markAsRead, id } = this.props;
-    const color = css(type === "urgent" ? styles.urgent : styles.default);
-    let li;
-
-    value
-      ? (li = (
-          <li
-            className={color}
-            data-notification-type={type}
-            onClick={() => markAsRead(id)}
-          >
-            {value}
-          </li>
-        ))
-      : (li = (
-          <li
-            className={color}
-            data-notification-type={type}
-            dangerouslySetInnerHTML={html}
-            onClick={() => markAsRead(id)}
-          ></li>
-        ));
-
-    return li;
-  }
-}
-
-NotificationItem.defaultProps = {
-  type: "default",
-  html: {},
-  value: "",
-  markAsRead: () => {},
-  id: NaN,
-};
-
-NotificationItem.propTypes = {
-  type: PropTypes.string,
-  html: PropTypes.shape({
-    __html: PropTypes.string,
-  }),
-  value: PropTypes.string,
-  markAsRead: PropTypes.func,
-  id: PropTypes.number,
-};
-
-const screenSize = {
-  small: "@media screen and (max-width: 900px)",
-};
-
-const onSmall = {
-  fontSize: "20px",
-  padding: "10px 8px",
-  borderBottom: "1px solid black",
-  listStyle: "none",
-};
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
   default: {
-    color: "blue",
-    [screenSize.small]: onSmall,
+    paddingBottom: 10,
+    color: "darkblue"
   },
 
   urgent: {
-    color: "red",
-    [screenSize.small]: onSmall,
+    paddingBottom: 10,
+    color:"red"
   },
-});
 
-export default NotificationItem;
+  listItem: {
+    '@media (max-width: 900px)': {
+      borderBottom: "1px solid black",
+      listStyle: "none",
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 8,
+      paddingRight: 8
+    }
+  }
+
+})
+
+const NotificationItem = React.memo(function NotificationItem(props) {
+  const NotifType = css(props.type == "default" ? styles.default : styles.urgent, styles.listItem)
+  return(
+    <li className={NotifType} data-notification-type={props.type} dangerouslySetInnerHTML={props.html}
+    onClick={()=>{}}>{props.value}</li>
+  )
+})
+
+NotificationItem.defaultProps = {
+  type: "default"
+}
+
+NotificationItem.propTypes = {
+  type: PropTypes.string.isRequired,
+  html: PropTypes.shape({__html: PropTypes.string}),
+  value: PropTypes.string
+}
+
+export default NotificationItem

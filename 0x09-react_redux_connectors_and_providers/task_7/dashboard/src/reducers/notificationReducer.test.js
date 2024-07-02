@@ -1,130 +1,28 @@
-import notificationReducer, {
-  initialNotificationState,
-} from "./notificationReducer";
+import { fetchNotificationsSucess, markAsRead, setLoadingState, setNotificationFilter } from "../actions/notificationActionCreators"
+import { initialState } from './notificationReducer';
+import { notificationReducer } from "./notificationReducer";
 
-import {
-  FETCH_NOTIFICATIONS_SUCCESS,
-  MARK_AS_READ,
-  SET_TYPE_FILTER,
-} from "../actions/notificationActionTypes";
 
-describe("courseReducer", function () {
-  it("initial state", function () {
-    const state = notificationReducer(undefined, {});
-    expect(state).toEqual(initialNotificationState);
-  });
-  it("MARK_AS_READ", function () {
-    const initialState = {
-      filter: "DEFAULT",
-      notifications: [
-        {
-          id: 1,
-          isRead: false,
-          type: "default",
-          value: "New course available",
-        },
-        {
-          id: 2,
-          isRead: false,
-          type: "urgent",
-          value: "New resume available",
-        },
-        {
-          id: 3,
-          isRead: false,
-          type: "urgent",
-          value: "New data available",
-        },
-      ],
-    };
+describe("notificationReducer function", () => {
+  it("the default state returns right data", () => {
+    const currentState = notificationReducer(undefined, {})
+    expect(currentState).toEqual(initialState)
+  })
 
-    const action = {
-      type: MARK_AS_READ,
-      index: 2,
-    };
+  it("MARK_AS_READ action returns the data with the right item updated", () =>{
+    const state = notificationReducer(undefined, fetchNotificationsSucess())
+    const index = 2
+    const currentState = notificationReducer(state, markAsRead(index))
+    expect(currentState.toJS().notifications[index].isRead).toEqual(true)
+  })
 
-    const expectedData = {
-      filter: "DEFAULT",
-      notifications: [
-        {
-          id: 1,
-          isRead: false,
-          type: "default",
-          value: "New course available",
-        },
-        {
-          id: 2,
-          isRead: true,
-          type: "urgent",
-          value: "New resume available",
-        },
-        {
-          id: 3,
-          isRead: false,
-          type: "urgent",
-          value: "New data available",
-        },
-      ],
-    };
+  it("SET_TYPE_FILTER action returns the data with the right item updated", () =>{
+    const currentState = notificationReducer(undefined, setNotificationFilter("URGENT"))
+    expect(currentState.toJS().filter).toEqual("URGENT")
+  })
 
-    const state = notificationReducer(initialState, action);
-    expect(state).toEqual(expectedData);
-  });
-  it("SET_TYPE_FILTER", function () {
-    const initialState = {
-      filter: "DEFAULT",
-      notifications: [
-        {
-          id: 1,
-          isRead: false,
-          type: "default",
-          value: "New course available",
-        },
-        {
-          id: 2,
-          isRead: false,
-          type: "urgent",
-          value: "New resume available",
-        },
-        {
-          id: 3,
-          isRead: false,
-          type: "urgent",
-          value: "New data available",
-        },
-      ],
-    };
-
-    const action = {
-      type: SET_TYPE_FILTER,
-      filter: "URGENT",
-    };
-
-    const expectedData = {
-      filter: "URGENT",
-      notifications: [
-        {
-          id: 1,
-          isRead: false,
-          type: "default",
-          value: "New course available",
-        },
-        {
-          id: 2,
-          isRead: false,
-          type: "urgent",
-          value: "New resume available",
-        },
-        {
-          id: 3,
-          isRead: false,
-          type: "urgent",
-          value: "New data available",
-        },
-      ],
-    };
-
-    const state = notificationReducer(initialState, action);
-    expect(state).toEqual(expectedData);
-  });
-});
+  it("SET_LOADING_STATE action returns the data with the right item updated", () =>{
+    const currentState = notificationReducer(undefined, setLoadingState(true))
+    expect(currentState.toJS().loading).toBe(true)
+  })
+})

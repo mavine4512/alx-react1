@@ -1,244 +1,51 @@
-import React from "react";
-import NotificationItem from "./NotificationItem";
-import PropTypes from "prop-types";
-import closeIcon from "../assets/close-icon.png";
-import { StyleSheet, css } from "aphrodite";
-
-function Notifications(props) {
-  const {
-    displayDrawer,
-    listNotifications,
-    handleDisplayDrawer,
-    handleHideDrawer,
-    markNotificationAsRead,
-    setNotificationFilter,
-  } = props;
-
-  const menuPStyle = css(
-    displayDrawer ? styles.menuItemPNoShow : styles.menuItemPShow
-  );
-
-  return (
-    <>
-      <div
-        className={css(styles.menuItem)}
-        id="menuItem"
-        onClick={handleDisplayDrawer}
-      >
-        <p className={menuPStyle}>Your notifications</p>
-      </div>
-      {displayDrawer && (
-        <div className={css(styles.notifications)} id="Notifications">
-          <button
-            style={{
-              background: "transparent",
-              border: "none",
-              position: "absolute",
-              right: 20,
-            }}
-            aria-label="close"
-            onClick={handleHideDrawer}
-            id="closeNotifications"
-          >
-            <img
-              src={closeIcon}
-              alt="close-icon"
-              className={css(styles.notificationsButtonImage)}
-            />
-          </button>
-          <p className={css(styles.notificationsP)}>
-            Here is the list of notifications
-          </p>
-          <button
-            type="button"
-            className={css(styles.filterButton)}
-            id="buttonFilterUrgent"
-            onClick={() => {
-              setNotificationFilter("URGENT");
-            }}
-          >
-            ❗❗
-          </button>
-          <button
-            type="button"
-            className={css(styles.filterButton)}
-            id="buttonFilterDefault"
-            onClick={() => {
-              setNotificationFilter("DEFAULT");
-            }}
-          >
-            💠
-          </button>
-          <ul className={css(styles.notificationsUL)}>
-            {(!listNotifications || listNotifications.count() === 0) && (
-              <NotificationItem
-                type="noNotifications"
-                value="No new notifications for now"
-              />
-            )}
-
-            {listNotifications &&
-              listNotifications.valueSeq().map((notification) => {
-                let html = notification.get("html");
-
-                if (html) html = html.toJS();
-
-                return (
-                  <NotificationItem
-                    key={notification.get("guid")}
-                    id={notification.get("guid")}
-                    type={notification.get("type")}
-                    value={notification.get("value")}
-                    html={html}
-                    markAsRead={markNotificationAsRead}
-                  />
-                );
-              })}
-          </ul>
-        </div>
-      )}
-    </>
-  );
-}
-
-Notifications.defaultProps = {
-  displayDrawer: false,
-  listNotifications: null,
-  handleDisplayDrawer: () => {},
-  handleHideDrawer: () => {},
-  markNotificationAsRead: () => {},
-  fetchNotifications: () => {},
-  setNotificationFilter: () => {},
-};
-
-Notifications.propTypes = {
-  displayDrawer: PropTypes.bool,
-  listNotifications: PropTypes.object,
-  handleDisplayDrawer: PropTypes.func,
-  handleHideDrawer: PropTypes.func,
-  markNotificationAsRead: PropTypes.func,
-  setNotificationFilter: PropTypes.func,
-};
-
-const cssVars = {
-  mainColor: "#e01d3f",
-};
-
-const screenSize = {
-  small: "@media screen and (max-width: 900px)",
-};
-
-const opacityKeyframes = {
-  from: {
-    opacity: 0.5,
-  },
-
-  to: {
-    opacity: 1,
-  },
-};
-
-const translateYKeyframes = {
-  "0%": {
-    transform: "translateY(0)",
-  },
-
-  "50%": {
-    transform: "translateY(-5px)",
-  },
-
-  "75%": {
-    transform: "translateY(5px)",
-  },
-
-  "100%": {
-    transform: "translateY(0)",
-  },
-};
-
-const borderKeyframes = {
-  "0%": {
-    border: `3px dashed deepSkyBlue`,
-  },
-
-  "100%": {
-    border: `3px dashed ${cssVars.mainColor}`,
-  },
-};
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
-  menuItem: {
-    float: "right",
-    backgroundColor: "#fff8f8",
+  default: { 
+    color: "darkblue"
+  },
+
+  urgent: {
+    color:"red"
+  },
+
+  listItem: {
+    cursor: "pointer",
+    paddingBottom: 5,
+    paddingTop: 5,
     ":hover": {
-      cursor: "pointer",
-      animationName: [opacityKeyframes, translateYKeyframes],
-      animationDuration: "1s, 0.5s",
-      animationIterationCount: 3,
+      fontWeight: 600
     },
-  },
-
-  menuItemPNoShow: {
-    marginRight: "8px",
-    display: "none",
-  },
-
-  menuItemPShow: {
-    marginRight: "8px",
-  },
-
-  notifications: {
-    padding: "10px",
-    marginBottom: "20px",
-    animationName: [borderKeyframes],
-    animationDuration: "0.8s",
-    animationIterationCount: 1,
-    animationFillMode: "forwards",
-    ":hover": {
-      border: `3px dashed deepSkyBlue`,
-    },
-    [screenSize.small]: {
-      float: "none",
-      border: "none",
+    '@media (max-width: 900px)': {
+      borderBottom: "1px solid black",
       listStyle: "none",
-      padding: 0,
-      fontSize: "20px",
-      ":hover": {
-        border: "none",
-      },
-      position: "absolute",
-      background: "white",
-      height: "110vh",
-      width: "100vw",
-      zIndex: 10,
-    },
-  },
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 8,
+      paddingRight: 8,
+    }
+  }
 
-  notificationsButtonImage: {
-    width: "10px",
-  },
+})
 
-  notificationsP: {
-    margin: 0,
-    marginTop: "15px",
-  },
+const NotificationItem = React.memo(function NotificationItem(props) {
+  const NotifType = css(props.type == "default" ? styles.default : styles.urgent, styles.listItem)
+  return(
+    <li className={NotifType} data-notification-type={props.type}
+    onClick={()=>props.markNotificationAsRead(props.id)}>{props.value}</li>
+  )
+})
 
-  notificationsUL: {
-    [screenSize.small]: {
-      padding: 0,
-    },
-  },
+NotificationItem.defaultProps = {
+  type: "default"
+}
 
-  filterButton: {
-    height: "30px",
-    width: "50px",
-    backgroundColor: "AliceBlue",
-    border: "none",
-    display: "inline-block",
-    border: "1px solid CornflowerBlue",
-    boxShadow: "1px 1px CornflowerBlue",
-    margin: "5px 5px 0px 5px",
-  },
-});
+NotificationItem.propTypes = {
+  type: PropTypes.string.isRequired,
+  html: PropTypes.shape({__html: PropTypes.string}),
+  value: PropTypes.string
+}
 
-export default Notifications;
+export default NotificationItem
