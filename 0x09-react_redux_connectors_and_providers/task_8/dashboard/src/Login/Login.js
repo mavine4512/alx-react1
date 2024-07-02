@@ -1,110 +1,56 @@
-import React, { Component } from "react";
-import { StyleSheet, css } from "aphrodite";
+import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
 
-class Login extends Component {
+const styles = StyleSheet.create({
+  login:{
+    '@media (max-width: 900px)': {
+      display: "block"
+    }
+  }
+})
+
+export default class Login extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      email: "",
-      password: "",
-      enableSubmit: false,
-    };
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
+      email: '',
+      password: '',
+      enableSubmit: false
+    }
   }
 
-  handleLoginSubmit(e) {
-    e.preventDefault();
-    const { email, password } = this.state;
-    this.props.logIn(email, password);
+  handleLoginSubmit = (event) => {
+      event.preventDefault()
+      this.props.logIn(this.state.email, this.state.password)
   }
 
-  handleChangeEmail(e) {
-    const { value } = e.target;
-    const { password } = this.state;
-
-    if (value !== "" && password !== "") this.setState({ enableSubmit: true });
-    else this.setState({ enableSubmit: false });
-
-    this.setState({ email: e.target.value });
+  handleChangeEmail=(event)=> {
+    this.setState({email: event.target.value}, this.submitButtonState)
   }
 
-  handleChangePassword(e) {
-    const { value } = e.target;
-    const { email } = this.state;
+  handleChangePassword = (event) => {
+    this.setState({password: event.target.value}, this.submitButtonState)
+  }
 
-    if (email !== "" && value !== "") this.setState({ enableSubmit: true });
-    else this.setState({ enableSubmit: false });
-
-    this.setState({ password: e.target.value });
+  submitButtonState() {
+    if (this.state.email.length > 0 && this.state.password.length > 0) {
+      this.setState({enableSubmit: true})
+    } else {
+      this.setState({enableSubmit: false})
+    }
   }
 
   render() {
     return (
-      <main role="main" className={css(styles.login)}>
-        <p>Login to access the full dashboard</p>
-        <form action="" onSubmit={this.handleLoginSubmit}>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className={css(styles.inp)}
-            value={this.state.email}
-            onChange={this.handleChangeEmail}
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className={css(styles.inp)}
-            value={this.state.password}
-            onChange={this.handleChangePassword}
-          />
-          <button
-            type="submit"
-            className={css(styles.btn)}
-            disabled={!this.state.enableSubmit}
-          >
-            OK
-          </button>
-        </form>
-      </main>
-    );
+      <form onSubmit={this.handleLoginSubmit}>
+        <label className={css(styles.login)} htmlFor="email">
+          Email: <input type="text" id="email" name="email" value={this.state.email} onChange={this.handleChangeEmail}/>&nbsp;&nbsp;
+        </label>
+        <label className={css(styles.login)} htmlFor="password"> 
+          Password: <input type="text" id="password" value={this.state.password} onChange={this.handleChangePassword}/>
+        </label>
+        <input type="submit" value="OK" disabled={this.state.enableSubmit ? false : true}/>
+      </form>
+    )
   }
 }
-
-const screenSize = {
-  small: "@media screen and (max-width: 900px)",
-};
-
-const styles = StyleSheet.create({
-  login: {
-    padding: "16px 24px",
-    [screenSize.small]: {
-      width: "90%",
-      padding: 0,
-    },
-  },
-  inp: {
-    margin: "4px",
-    [screenSize.small]: {
-      display: "block",
-      border: "none",
-      margin: 0,
-    },
-  },
-  btn: {
-    margin: "4px",
-    cursor: "pointer",
-    [screenSize.small]: {
-      width: "32px",
-      display: "block",
-      margin: 0,
-    },
-  },
-});
-
-export default Login;

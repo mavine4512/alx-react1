@@ -1,14 +1,11 @@
-import { selectCourse, unSelectCourse } from "./courseActionCreators";
-import { SELECT_COURSE, UNSELECT_COURSE } from "./courseActionTypes";
+import { selectCourse, unSelectCourse } from './courseActionCreators';
 
-describe("action creators", () => {
-  it("selectCourse", () => {
-    const result = selectCourse(1);
-    expect(result).toEqual({ type: SELECT_COURSE, index: 1 });
-  });
+test ('selectCourse func returns the right object', ()=>{
+  const action = selectCourse(1)
+  expect(action).toEqual({ type: "SELECT_COURSE", index: 1 })
+})
 
-  it("unSelectCourse", () => {
-    const result = unSelectCourse(1);
-    expect(result).toEqual({ type: UNSELECT_COURSE, index: 1 });
-  });
-});
+test ('unselectCourse func returns the right object', ()=>{
+  const action = unSelectCourse(1)
+  expect(action).toEqual({ type: "UNSELECT_COURSE", index: 1 })
+})

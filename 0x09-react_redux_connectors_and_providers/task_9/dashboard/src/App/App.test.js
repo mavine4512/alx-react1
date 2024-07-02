@@ -1,67 +1,70 @@
-import { shallow, mount } from "enzyme";
-import React from "react";
-import { App, listNotificationsInitialState, mapStateToProps } from "./App";
-import { StyleSheetTestUtils } from "aphrodite";
-import AppContext, { user, logOut } from "./AppContext";
+import React from 'react';
+import { App, mapStateToProps } from "./App";
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Login from '../Login/Login';
+import { shallow } from 'enzyme';
+import CourseList from '../CourseList/CourseList';
+import { StyleSheetTestUtils } from 'aphrodite';
+import { fromJS } from 'immutable';
 
-import { fromJS } from "immutable";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import uiReducer, { initialState } from "../reducers/uiReducer";
 
-const store = createStore(uiReducer, initialState);
-
-describe("<App />", () => {
-  beforeAll(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-  afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
-
-  it("App renders without crashing", () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.exists()).toEqual(true);
-  });
-  it("should contain the Login component", () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find("Login")).toHaveLength(1);
-  });
-
-  it("CourseList is not displayed with isLoggedIn false by default", () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find("CourseList")).toHaveLength(0);
-  });
-
-  it("isLoggedIn is true", () => {
-    const wrapper = shallow(<App isLoggedIn={true} />);
-
-    expect(wrapper.find("Login")).toHaveLength(0);
-    expect(wrapper.find("CourseList")).toHaveLength(1);
-  });
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
 });
 
-describe("App Redux", () => {
-  it("mapStateToProps returns the right object from user Login", () => {
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection()
+  jest.restoreAllMocks();
+});
+
+
+describe('App Component', () => {
+  let wrapper = shallow(<App />);
+  it("renders without crashing", () => {
+    expect(wrapper.exists()).toBe(true)
+  })
+
+  it("should contain the Header component", () => {
+    expect(wrapper.containsMatchingElement(<Header/>)).toEqual(true)
+  })
+
+  it("should contain the Login component", () => {
+    expect(wrapper.containsMatchingElement(<Login/>)).toEqual(true)
+   })
+
+  it("should contain the Footer component", () => {
+    expect(wrapper.containsMatchingElement(<Footer/>)).toEqual(true)
+   })
+
+  it("does not render CourseList component", () => {
+    expect(wrapper.containsMatchingElement(<CourseList/>)).toEqual(false)
+  })
+
+})
+
+
+describe('App Component when isLoggedin is true', () => {
+  const wrapper = shallow(<App isLoggedIn={true}/>);
+
+  it("does not render Login component", () => {
+    expect(wrapper.containsMatchingElement(<Login/>)).toEqual(false)
+  })
+
+  it("renders CourseList component", () => {
+    expect(wrapper.containsMatchingElement(<CourseList/>)).toEqual(true)
+  })
+})
+
+describe("mapStateToProps function", () => {
+    test("mapStateToProps function", () => {
     let state = {
       ui: fromJS({
         isUserLoggedIn: true,
-      }),
+        isNotificationDrawerVisible: true
+      })
     };
-
-    const result = mapStateToProps(state);
-
-    expect(result).toEqual({ isLoggedIn: true });
-  });
-  it("mapStateToProps returns the right object from display Drawer", () => {
-    let state = {
-      ui: fromJS({
-        isNotificationDrawerVisible: true,
-      }),
-    };
-
-    const result = mapStateToProps(state);
-
-    expect(result).toEqual({ displayDrawer: true });
-  });
-});
+    const obj = mapStateToProps(state)
+    expect(obj).toEqual({ isLoggedIn: true, displayDrawer: true })
+  })
+})

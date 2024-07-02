@@ -1,20 +1,29 @@
-import React from "react";
-import { mount } from "enzyme";
-import { jest } from "@jest/globals";
+import React from 'react';
+import { shallow } from 'enzyme';
+import Login from '../Login/Login';
+import withLogging from './WithLogging';
 
-import WithLogging from "./WithLogging";
-import Login from "../Login/Login";
-
-describe("Testing WithLogging HOC", () => {
-  it("should make sure console logs was called on unmount and mount with component when the wrapper element is pure html", () => {
-    console.log = jest.fn();
-    const Hoc = WithLogging(() => <p>Hello there</p>);
-    const comp = <Hoc title="hello" />;
-    let wrapper = mount(comp);
-
-    expect(console.log).toBeCalleWith("Component is mounted");
-    wrapper.unmount();
-    expect(console.log).toBeCalleWith("Component is going to unmounted");
+const LoginComponent = withLogging(Login)
+const wrapper = shallow(<LoginComponent/>)
+describe('WithLogging HOC', () => {
+  afterEach(() => {
     jest.restoreAllMocks();
   });
-});
+
+  it('calls console.log twice',() => {
+    const instance = wrapper.instance()
+    const log = jest.spyOn(console, "log").mockImplementation(() => {});
+    instance.componentDidMount()
+    instance.componentWillUnmount()
+    expect(log).toHaveBeenCalledTimes(2);
+  })
+
+  it('logs the right message',() => {
+    const instance = wrapper.instance()
+    const log = jest.spyOn(console, "log").mockImplementation(() => {});
+    instance.componentDidMount()
+    expect(log.mock.calls[0][0]).toBe('Component Login is mounted')
+    instance.componentWillUnmount()
+    expect(log.mock.calls[1][0]).toBe('Component Login is going to unmount')
+  })
+})

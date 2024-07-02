@@ -1,164 +1,35 @@
-import courseReducer from "./courseReducer";
-import {
-  FETCH_COURSE_SUCCESS,
-  SELECT_COURSE,
-  UNSELECT_COURSE,
-} from "../actions/courseActionTypes";
+import { fetchCourseSuccess, selectCourse, unSelectCourse } from "../actions/courseActionCreators"
+import { coursesNormalizer } from "../schema/courses"
+import { courseReducer } from "./courseReducer"
+import { Map } from "immutable"
 
-describe("courseReducer", function () {
-  it("Tests that the default state returns an empty arr", function () {
-    const state = courseReducer(undefined, {});
-    expect(state).toEqual([]);
-  });
 
-  it("FETCH_COURSE_SUCCESS", function () {
-    const action = {
-      type: FETCH_COURSE_SUCCESS,
-      data: [
-        {
-          id: 1,
-          name: "ES6",
-          credit: 60,
-        },
-        {
-          id: 2,
-          name: "Webpack",
-          credit: 20,
-        },
-        {
-          id: 3,
-          name: "React",
-          credit: 40,
-        },
-      ],
-    };
+const action = fetchCourseSuccess()
+const courseData = coursesNormalizer(action.data)
+const state = courseData.entities.courses
+courseData.result.map((id)=> state[id].isSelected = false)
 
-    const expectedData = [
-      {
-        id: 1,
-        name: "ES6",
-        isSelected: false,
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: "Webpack",
-        isSelected: false,
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: "React",
-        isSelected: false,
-        credit: 40,
-      },
-    ];
+describe("courseReducer", ()=>{
+  it("the default state returns an empty array", () =>{
+    const currentState = courseReducer(undefined, {})
+    expect(currentState).toEqual(Map([]))
+  })
 
-    const state = courseReducer(undefined, action);
-    expect(state).toEqual(expectedData);
-  });
+  it("FETCH_COURSE_SUCCESS action returns the data passed", () =>{
+    const currentState = courseReducer(undefined, fetchCourseSuccess())
+    expect(currentState.toJS()).toEqual(state)
+  })
 
-  it("SELECT_COURSE", function () {
-    const initialState = [
-      {
-        id: 1,
-        name: "ES6",
-        isSelected: false,
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: "Webpack",
-        isSelected: false,
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: "React",
-        isSelected: false,
-        credit: 40,
-      },
-    ];
+  it("SELECT_COURSE action returns the data with the right item updated", () =>{
+    const index = 2
+    const currentState = courseReducer(Map(state), selectCourse(index))
+    expect(currentState.toJS()[index].isSelected).toEqual(true)
+  })
 
-    const action = {
-      type: SELECT_COURSE,
-      index: 2,
-    };
-
-    const expectedData = [
-      {
-        id: 1,
-        name: "ES6",
-        isSelected: false,
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: "Webpack",
-        isSelected: true,
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: "React",
-        isSelected: false,
-        credit: 40,
-      },
-    ];
-
-    const state = courseReducer(initialState, action);
-    expect(state).toEqual(expectedData);
-  });
-
-  it("UNSELECT_COURSE", function () {
-    const initialState = [
-      {
-        id: 1,
-        name: "ES6",
-        isSelected: false,
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: "Webpack",
-        isSelected: true,
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: "React",
-        isSelected: false,
-        credit: 40,
-      },
-    ];
-
-    const action = {
-      type: UNSELECT_COURSE,
-      index: 2,
-    };
-
-    const expectedData = [
-      {
-        id: 1,
-        name: "ES6",
-        isSelected: false,
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: "Webpack",
-        isSelected: false,
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: "React",
-        isSelected: false,
-        credit: 40,
-      },
-    ];
-
-    const state = courseReducer(initialState, action);
-    expect(state).toEqual(expectedData);
-  });
-});
+  it("UNSELECT_COURSE action returns the data with the right item updated", () =>{
+    const index = 2
+    state[index].isSelected = true
+    const currentState = courseReducer(Map(state), unSelectCourse(index))
+    expect(currentState.toJS()[index].isSelected).toEqual(false)
+  })
+})
