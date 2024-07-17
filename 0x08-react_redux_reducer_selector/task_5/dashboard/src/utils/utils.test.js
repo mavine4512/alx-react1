@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
@@ -42,7 +46,5 @@ it("checks getLatestNotification returns the correct string", () => {
   act(() => {
     render(getLatestNotification(), container);
   });
-  expect(container.textContent).toBe(
-    "<strong>Urgent requirement</strong> - complete by EOD"
-  );
+  expect(container.textContent).toBe("<strong>Urgent requirement</strong> - complete by EOD");
 });
