@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from "react";
 import Header from "./Header";
 import { mount, shallow } from "enzyme";

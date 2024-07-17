@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { shallow, mount } from "enzyme";
 import React from "react";
 import Footer from "./Footer";
