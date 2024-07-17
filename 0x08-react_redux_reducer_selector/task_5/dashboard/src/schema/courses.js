@@ -1,7 +1,7 @@
-import { normalize, schema } from "normalizr";
+import { normalize, schema } from 'normalizr';
 
-const course = new schema.Entity("courses");
+const course = new schema.Entity('courses');
 
 export const coursesNormalizer = (data) => {
-  return normalize(data, [course]);
+	return normalize(data, [course]);
 };
