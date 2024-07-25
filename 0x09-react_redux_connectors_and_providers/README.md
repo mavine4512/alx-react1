@@ -1,4 +1,4 @@
-## 0x09. React Redux Connectors and Providers
+## 0x09. React Redux Connectors and Providers.
 
 ### Learning Objectives
 
